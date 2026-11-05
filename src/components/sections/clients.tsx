@@ -118,7 +118,7 @@ function BeforeAfterSlider({ beforeSrc, afterSrc, label }: { beforeSrc: any; aft
 
 export function Clients() {
   return (
-    <section id="clients" className="py-20 sm:py-28 bg-surface">
+    <section id="clients" className="py-20 sm:py-28 bg-surface/65 backdrop-blur-md relative z-10">
       <div className="mx-auto max-w-7xl px-5 sm:px-7">
         <SectionHeading
           eyebrow="Client Testimonials"

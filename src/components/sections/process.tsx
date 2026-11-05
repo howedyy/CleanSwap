@@ -32,7 +32,7 @@ const STEPS = [
 
 export function Process() {
   return (
-    <section id="how-we-work" className="py-20 sm:py-28 bg-surface border-y border-line">
+    <section id="process" className="py-20 sm:py-28 bg-white/70 backdrop-blur-md border-y border-line/60 relative z-10">
       <div className="mx-auto max-w-7xl px-5 sm:px-7">
         <SectionHeading
           eyebrow="Our Process"

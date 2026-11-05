@@ -1,23 +1,26 @@
 import { Header } from "@/components/sections/header";
-import { EyeIntro } from "@/components/sections/eye-intro";
+import { ScrollyEyeCanvas } from "@/components/3d/scrolly-eye-canvas";
+import { SpatialOasisWorld } from "@/components/3d/spatial-oasis-world";
+import { LivingAmulet } from "@/components/3d/living-amulet";
 import { Hero } from "@/components/sections/hero";
 import { About } from "@/components/sections/about";
 import { Services } from "@/components/sections/services";
 import { Process } from "@/components/sections/process";
 import { Clients } from "@/components/sections/clients";
 import { Contact } from "@/components/sections/contact";
-import { ScrollTour3D } from "@/components/3d/scroll-tour-3d";
+import { FooterClosingEye } from "@/components/sections/footer-closing-eye";
+import { BrandLogo } from "@/components/ui/brand-logo";
 import { SITE } from "@/lib/site";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <>
-      <ScrollTour3D />
+      <SpatialOasisWorld />
       <Header />
+      <LivingAmulet />
       <main className="relative z-10">
-        <EyeIntro />
+        <ScrollyEyeCanvas />
         <Hero />
         <About />
         <Services />
@@ -26,33 +29,21 @@ export default function Home() {
         <Contact />
       </main>
 
+      {/* The Sanctuary Sealed: Closing Eye Journey */}
+      <FooterClosingEye />
+
       {/* Professional Footer */}
-      <footer className="bg-ink py-16 text-slate-400 border-t border-slate-800">
+      <footer className="bg-slate-950 py-16 text-slate-400 border-t border-slate-800/80">
         <div className="mx-auto max-w-7xl px-5 sm:px-7">
-          <div className="grid gap-10 md:grid-cols-4 pb-12 border-b border-slate-800">
+          <div className="grid gap-10 md:grid-cols-4 pb-12 border-b border-slate-800/80">
             {/* Col 1: Brand & Logo */}
             <div className="md:col-span-2">
-              <div className="flex items-center gap-3">
-                <div className="relative h-10 w-28 bg-white/10 rounded-lg p-1">
-                  <Image
-                    src="/logo.png"
-                    alt="Clean Sweep Oasis LTD"
-                    fill
-                    className="object-contain p-1"
-                  />
-                </div>
-                <div>
-                  <h3 className="font-display text-base font-bold text-white tracking-tight">
-                    Clean Sweep Oasis LTD
-                  </h3>
-                  <p className="text-xs text-teal-400 font-medium">Reliable • Professional • Family Run</p>
-                </div>
-              </div>
+              <BrandLogo variant="dark" />
               <p className="mt-4 text-sm text-slate-400 max-w-md leading-relaxed">
                 A trusted family-run business providing cleaning and property support services to domestic and commercial clients across London and the UK.
               </p>
               <div className="mt-4 flex flex-wrap gap-2 text-xs text-slate-300">
-                <span className="rounded bg-slate-800/80 px-2.5 py-1">Public Liability Insured</span>
+                <span className="rounded bg-slate-800/80 px-2.5 py-1">Public Liability Insured (£5M)</span>
                 <span className="rounded bg-slate-800/80 px-2.5 py-1">COSHH & H&S Practices</span>
               </div>
             </div>

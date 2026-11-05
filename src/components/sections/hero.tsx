@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star, ShieldCheck, ArrowRight, BadgeCheck } from "lucide-react";
+import { Star, ShieldCheck, ArrowRight, BadgeCheck, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/ui/section";
+import { Card3D, Pop3D } from "@/components/ui/card-3d";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { Segmented, Stepper } from "@/components/ui/controls";
 import { useBooking } from "@/components/booking/booking-provider";
@@ -52,9 +53,10 @@ export function Hero() {
   };
 
   return (
-    <section id="home" className="relative overflow-hidden bg-brand-soft/80 backdrop-blur-md pt-20 pb-20 sm:pt-28 sm:pb-28">
-      {/* Background ambient gradient */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand/5 rounded-full blur-[100px] opacity-40 pointer-events-none" />
+    <section id="home" className="relative overflow-hidden bg-linear-to-b from-teal-50/40 via-white/50 to-surface/60 backdrop-blur-xs pt-20 pb-20 sm:pt-28 sm:pb-28 relative z-10">
+      {/* Background ambient luxury gradient rings */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] bg-linear-to-tr from-teal-500/10 via-amber-400/5 to-transparent rounded-full blur-[120px] opacity-70 pointer-events-none" />
+      <div className="absolute top-1/2 right-[-10%] w-[500px] h-[500px] bg-teal-400/10 rounded-full blur-[100px] pointer-events-none" />
       
       <div className="relative mx-auto max-w-7xl px-5 sm:px-7">
         <div className="grid gap-12 lg:grid-cols-[1.1fr,1fr] lg:gap-8 items-center">
@@ -63,31 +65,33 @@ export function Hero() {
           <div className="max-w-2xl">
             <Reveal y={20}>
               <div className="flex flex-wrap items-center gap-3 mb-6">
-                <div className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-xs font-semibold text-brand-hover shadow-sm ring-1 ring-line">
-                  <span className="size-2 rounded-full bg-brand animate-pulse" />
+                <div className="inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-md px-3.5 py-1.5 text-xs font-semibold text-slate-800 shadow-xs ring-1 ring-amber-500/20">
+                  <span className="size-2 rounded-full bg-amber-500 animate-pulse" />
                   Reliable • Professional • Family Run
                 </div>
-                <div className="inline-flex items-center gap-1.5 rounded-full bg-teal-50/90 px-3 py-1.5 text-xs font-semibold text-teal-800 ring-1 ring-teal-200/80 shadow-xs">
-                  <span className="size-2 rounded-full bg-teal-500 animate-ping" />
-                  Live 3D Tour • Scroll to Open Eye
+                <div className="inline-flex items-center gap-1.5 rounded-full bg-teal-900/90 backdrop-blur-md px-3.5 py-1.5 text-xs font-semibold text-amber-200 ring-1 ring-amber-400/30 shadow-xs">
+                  <Sparkles className="size-3 text-amber-400 animate-spin" />
+                  Awakened Sanctuary • London & UK Coverage
                 </div>
               </div>
               <h1 className="font-display text-4xl font-bold tracking-tight text-ink sm:text-5xl lg:text-[3.8rem] lg:leading-[1.12]">
                 Professional Cleaning &
-                <span className="block text-brand">Property Services</span>
+                <span className="block bg-linear-to-r from-teal-700 via-teal-600 to-amber-600 bg-clip-text text-transparent">
+                  Property Services
+                </span>
               </h1>
             </Reveal>
             
             <Reveal delay={0.1} y={20}>
-              <p className="mt-6 text-lg text-muted sm:text-xl leading-relaxed">
+              <p className="mt-6 text-lg text-slate-600 sm:text-xl leading-relaxed">
                 A trusted family-run business providing cleaning and property support services to domestic and commercial clients across London and the UK. High standards, flexible scheduling, and competitive pricing.
               </p>
             </Reveal>
             
             <Reveal delay={0.2} y={20}>
               <div className="mt-8 flex flex-wrap gap-3.5 items-center">
-                <div className="flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 shadow-sm ring-1 ring-line">
-                  <div className="flex -space-x-0.5 text-amber-400">
+                <div className="flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-md px-3.5 py-1.5 shadow-xs ring-1 ring-slate-200 hover:ring-amber-400/40 transition-all">
+                  <div className="flex -space-x-0.5 text-amber-500">
                     <Star className="size-4 fill-current" />
                     <Star className="size-4 fill-current" />
                     <Star className="size-4 fill-current" />
@@ -97,17 +101,17 @@ export function Hero() {
                   <span className="text-xs font-semibold text-ink">5-Star Client Feedback</span>
                 </div>
                 
-                <div className="flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 shadow-sm ring-1 ring-line">
-                  <ShieldCheck className="size-4 text-brand" />
-                  <span className="text-xs font-semibold text-ink">Public Liability Insured</span>
+                <div className="flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-md px-3.5 py-1.5 shadow-xs ring-1 ring-slate-200 hover:ring-teal-400/50 transition-all">
+                  <ShieldCheck className="size-4 text-teal-600" />
+                  <span className="text-xs font-semibold text-ink">Public Liability Insured (£5M)</span>
                 </div>
 
-                <div className="flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 shadow-sm ring-1 ring-line">
-                  <BadgeCheck className="size-4 text-brand" />
+                <div className="flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-md px-3.5 py-1.5 shadow-xs ring-1 ring-slate-200 hover:ring-teal-400/50 transition-all">
+                  <BadgeCheck className="size-4 text-teal-600" />
                   <span className="text-xs font-semibold text-ink">COSHH & H&S Practices</span>
                 </div>
 
-                <div className="flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 shadow-sm ring-1 ring-line">
+                <div className="flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-md px-3.5 py-1.5 shadow-xs ring-1 ring-slate-200 hover:ring-amber-400/40 transition-all">
                   <span className="size-2 rounded-full bg-teal-500" />
                   <span className="text-xs font-semibold text-ink">Commercial & Domestic</span>
                 </div>
@@ -117,8 +121,19 @@ export function Hero() {
 
           {/* Right: Quick Estimator Widget */}
           <Reveal delay={0.3} y={30} className="w-full max-w-md mx-auto lg:ml-auto lg:mr-0">
-            <div className="rounded-3xl bg-white p-6 sm:p-8 shadow-2xl ring-1 ring-line">
-              <h3 className="font-display text-xl font-bold text-ink mb-6">Quick Price Estimator</h3>
+            <Card3D depth={10} className="rounded-3xl">
+              <div className="rounded-3xl bg-white/95 backdrop-blur-xl p-6 sm:p-8 shadow-2xl ring-1 ring-slate-200/80 border-t-2 border-amber-400/60 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-amber-400/5 rounded-full blur-2xl pointer-events-none" />
+                <div className="flex items-center justify-between mb-6">
+                  <Pop3D z={25}>
+                    <h3 className="font-display text-xl font-bold text-ink">Quick Price Estimator</h3>
+                  </Pop3D>
+                  <Pop3D z={40}>
+                    <span className="rounded-full bg-amber-50 border border-amber-200/80 px-2.5 py-0.5 text-[10px] font-bold text-amber-800 uppercase tracking-wider shadow-xs">
+                      Instant Quote
+                    </span>
+                  </Pop3D>
+                </div>
               
               <div className="space-y-6">
                 <div className="space-y-3">
@@ -194,6 +209,7 @@ export function Hero() {
                 </div>
               </div>
             </div>
+          </Card3D>
           </Reveal>
           
         </div>

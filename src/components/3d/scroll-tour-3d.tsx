@@ -97,7 +97,7 @@ export function ScrollTour3D() {
 
     // --- Scene & Camera ---
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0xf0fdfa, 0.035);
+    scene.fog = new THREE.FogExp2(0xf0fdfa, 0.016);
 
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
     camera.position.set(0, 0.3, 6.2);
@@ -299,6 +299,13 @@ export function ScrollTour3D() {
       isDraggingTour.current = false;
     };
 
+    const handlePointerLook = (e: MouseEvent) => {
+      const nx = (e.clientX / window.innerWidth - 0.5) * 2;
+      const ny = (e.clientY / window.innerHeight - 0.5) * 2;
+      horusEye.setMouseLook(nx, ny);
+    };
+    window.addEventListener("mousemove", handlePointerLook);
+
     window.addEventListener("mousedown", handleMouseDown);
     window.addEventListener("touchstart", handleMouseDown, { passive: true });
     window.addEventListener("mousemove", handleMouseMove);
@@ -432,6 +439,7 @@ export function ScrollTour3D() {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousemove", handlePointerLook);
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("touchstart", handleMouseDown);
       window.removeEventListener("mousemove", handleMouseMove);
