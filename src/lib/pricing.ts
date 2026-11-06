@@ -51,8 +51,8 @@ export const SERVICES: Record<
     subscribable: true,
   },
   regular: {
-    label: "Domestic Cleaning",
-    short: "Domestic Clean",
+    label: "Residential Cleaning",
+    short: "Residential Clean",
     description: "One-Off Visits & Regular Visits",
     subscribable: true,
   },

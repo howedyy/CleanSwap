@@ -49,11 +49,11 @@ const SERVICES = [
   {
     id: "regular" as const,
     icon: Home,
-    title: "Domestic & Deep Cleaning",
+    title: "Residential & Deep Cleaning",
     badge: "Family-Run Quality",
     priceText: "From £18/hr",
     priceSub: "Deep Cleans from £120",
-    description: "Reliable domestic visits or thorough deep cleans tailored around your home life.",
+    description: "Reliable residential visits or thorough deep cleans tailored around your home life.",
     includes: [
       "Deep cleaning & one-off visits",
       "Recurring weekly / fortnightly cleans",
@@ -62,7 +62,7 @@ const SERVICES = [
       "Friendly, trusted family-run cleaners",
     ],
     actionType: "book" as const,
-    actionLabel: "Book Domestic Clean",
+    actionLabel: "Book Residential Clean",
   },
   {
     id: "specialist" as const,
@@ -94,7 +94,7 @@ export function Services() {
         <SectionHeading
           eyebrow="Our Services"
           title="Pricing & Quotation Guide"
-          description="Clear, competitive pricing for domestic, commercial, and specialist property support. Free no-obligation quotations available for every project."
+          description="Clear, competitive pricing for residential, commercial, and specialist property support. Free no-obligation quotations available for every project."
         />
 
         <div className="mt-12 flex justify-center">

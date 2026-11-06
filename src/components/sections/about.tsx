@@ -41,7 +41,7 @@ const WHY_CHOOSE_US = [
 const METRICS = [
   { value: 100, suffix: "%", label: "Public Liability Insured & COSHH Compliant" },
   { value: 5, suffix: ".0 ★", label: "Consistent Five-Star Customer Rating" },
-  { value: 3, suffix: "+ Years", label: "Trusted Commercial & Domestic Partnerships" },
+  { value: 3, suffix: "+ Years", label: "Trusted Commercial & Residential Partnerships" },
 ];
 
 export function About() {
@@ -51,7 +51,7 @@ export function About() {
         <SectionHeading
           eyebrow="About Clean Sweep Oasis"
           title="A trusted family-run business delivering exceptional property support."
-          description="We provide comprehensive cleaning and property support services to domestic and commercial clients across London and the UK, with high standards, friendly service, and total reliability."
+          description="We provide comprehensive cleaning and property support services to residential and commercial clients across London and the UK, with high standards, friendly service, and total reliability."
         />
 
         {/* 6 Core Pillars with 3D Depth */}

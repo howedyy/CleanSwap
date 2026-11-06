@@ -45,8 +45,8 @@ export const TOUR_STAGES: TourStage[] = [
     tag: "Commercial Services",
   },
   {
-    id: "domestic",
-    name: "Domestic, Deep Clean & Grounds",
+    id: "residential",
+    name: "Residential, Deep Clean & Grounds",
     subtitle: "Homes, Tenancy Turnovers, Gardens & Odd Jobs",
     progress: [0.52, 0.70],
     cameraPos: [0.5, -0.8, 5.5],

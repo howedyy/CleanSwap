@@ -21,7 +21,7 @@ const FEATURED_REVIEW = {
 const REVIEWS = [
   {
     name: "Laura",
-    service: "Domestic & Regular Cleaning",
+    service: "Residential & Regular Cleaning",
     rating: 5,
     text: "Excellent, friendly, professional and efficient service. Brilliant standards and outstanding service.",
   },

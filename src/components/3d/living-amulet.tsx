@@ -16,7 +16,7 @@ interface SectionStage {
 const SECTIONS: SectionStage[] = [
   { id: "home", name: "Oasis Sanctuary", subtitle: "Hero & Quick Price Estimator", tag: "Phase 1", accent: "from-teal-500 to-amber-500" },
   { id: "about", name: "Trust & Standards", subtitle: "£5M Public Liability & COSHH", tag: "Phase 2", accent: "from-amber-500 to-teal-400" },
-  { id: "services", name: "Tailored Services", subtitle: "Commercial, Tenancy & Domestic", tag: "Phase 3", accent: "from-teal-400 to-emerald-400" },
+  { id: "services", name: "Tailored Services", subtitle: "Commercial, Tenancy & Residential", tag: "Phase 3", accent: "from-teal-400 to-emerald-400" },
   { id: "process", name: "4-Step Pathway", subtitle: "Site Visit ➔ Certified Handover", tag: "Phase 4", accent: "from-amber-400 to-amber-600" },
   { id: "clients", name: "Client Feedback", subtitle: "5.0 ★ Multi-Year Partnerships", tag: "Phase 5", accent: "from-teal-500 to-cyan-400" },
   { id: "contact", name: "Free Quotations", subtitle: "Direct WhatsApp & Online Booking", tag: "Phase 6", accent: "from-amber-500 to-teal-500" },

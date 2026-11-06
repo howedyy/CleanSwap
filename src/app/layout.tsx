@@ -23,11 +23,11 @@ export const metadata: Metadata = {
     "deep clean London",
     "family run cleaners",
     "gardening odd jobs",
-    "domestic cleaner UK",
+    "residential cleaner UK",
   ],
   openGraph: {
     title: "Clean Sweep Oasis LTD — Reliable • Professional • Family Run",
-    description: "High standard domestic, commercial and specialist cleaning services across London & the UK.",
+    description: "High standard residential, commercial and specialist cleaning services across London & the UK.",
     locale: "en_GB",
     type: "website",
   },

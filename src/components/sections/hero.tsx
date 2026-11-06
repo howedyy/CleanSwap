@@ -84,7 +84,7 @@ export function Hero() {
             
             <Reveal delay={0.1} y={20}>
               <p className="mt-6 text-lg text-slate-600 sm:text-xl leading-relaxed">
-                A trusted family-run business providing cleaning and property support services to domestic and commercial clients across London and the UK. High standards, flexible scheduling, and competitive pricing.
+                A trusted family-run business providing cleaning and property support services to residential and commercial clients across London and the UK. High standards, flexible scheduling, and competitive pricing.
               </p>
             </Reveal>
             
@@ -113,7 +113,7 @@ export function Hero() {
 
                 <div className="flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-md px-3.5 py-1.5 shadow-xs ring-1 ring-slate-200 hover:ring-amber-400/40 transition-all">
                   <span className="size-2 rounded-full bg-teal-500" />
-                  <span className="text-xs font-semibold text-ink">Commercial & Domestic</span>
+                  <span className="text-xs font-semibold text-ink">Commercial & Residential</span>
                 </div>
               </div>
             </Reveal>
@@ -142,7 +142,7 @@ export function Hero() {
                     label="Service Type"
                     options={[
                       { value: "commercial", label: "Commercial" },
-                      { value: "regular", label: "Domestic" },
+                      { value: "regular", label: "Residential" },
                       { value: "deep", label: "Deep Clean" },
                       { value: "tenancy", label: "Tenancy" },
                     ]}
