@@ -6,53 +6,56 @@ import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useBooking } from "@/components/booking/booking-provider";
+import { BrandLogo } from "@/components/ui/brand-logo";
+import { SITE, NAV_ITEMS } from "@/lib/site";
 
 export function Header() {
   const { scrollY } = useScroll();
-  const bgOpacity = useTransform(scrollY, [0, 50], [0, 0.8]);
-  const blur = useTransform(scrollY, [0, 50], [0, 12]);
-  const border = useTransform(scrollY, [0, 50], ["rgba(226, 232, 240, 0)", "rgba(226, 232, 240, 1)"]);
+  // Header stays hidden during the opening sequence and glides in as user enters the website
+  const headerOpacity = useTransform(scrollY, [200, 450], [0, 1]);
+  const headerY = useTransform(scrollY, [200, 450], [-25, 0]);
+  const bgOpacity = useTransform(scrollY, [450, 600], [0.85, 0.95]);
+  const blur = useTransform(scrollY, [450, 600], [8, 16]);
   
-  const { openBooking } = useBooking();
+  const { openBooking, requestQuote } = useBooking();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const links = [
-    { href: "#home", label: "Home" },
-    { href: "#about", label: "About" },
-    { href: "#clients", label: "Clients" },
-    { href: "#services", label: "Services" },
-    { href: "#contact", label: "Contact" },
-  ];
 
   return (
     <motion.header
-      className="fixed inset-x-0 top-0 z-40 border-b"
+      className="fixed inset-x-0 top-0 z-40 border-b border-slate-200/80 shadow-xs"
       style={{
+        opacity: headerOpacity,
+        y: headerY,
         backgroundColor: useTransform(bgOpacity, (v) => `rgba(255, 255, 255, ${v})`),
         backdropFilter: useTransform(blur, (v) => `blur(${v}px)`),
-        borderColor: border,
+        pointerEvents: useTransform(scrollY, (v) => (v > 250 ? "auto" : "none")),
       }}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-7">
-        <Link href="#home" className="flex items-center gap-2 text-ink hover:opacity-80 transition-opacity">
-          <Sparkles className="size-6 text-brand" />
-          <span className="font-display text-xl font-bold tracking-tight">Clean Swap</span>
-        </Link>
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-7">
+        <BrandLogo />
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          {links.map((link) => (
+        <nav className="hidden md:flex items-center gap-7">
+          {NAV_ITEMS.map((item) => (
             <Link
-              key={link.href}
-              href={link.href}
+              key={item.id}
+              href={`#${item.id}`}
               className="text-sm font-medium text-muted hover:text-brand transition-colors"
             >
-              {link.label}
+              {item.label}
             </Link>
           ))}
         </nav>
 
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-3">
+          <Button
+            onClick={() => requestQuote("Commercial / Free Quotation Request")}
+            variant="outline"
+            size="sm"
+            className="hidden xl:inline-flex"
+          >
+            Free Quotation
+          </Button>
           <Button onClick={() => openBooking()} size="sm">
             Book a Clean
           </Button>
@@ -77,25 +80,37 @@ export function Header() {
           className="absolute inset-x-0 top-16 border-b border-line bg-white px-5 py-4 shadow-lg md:hidden"
         >
           <nav className="flex flex-col gap-4">
-            {links.map((link) => (
+            {NAV_ITEMS.map((item) => (
               <Link
-                key={link.href}
-                href={link.href}
+                key={item.id}
+                href={`#${item.id}`}
                 className="text-base font-medium text-ink hover:text-brand"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                {link.label}
+                {item.label}
               </Link>
             ))}
-            <Button
-              className="w-full mt-2"
-              onClick={() => {
-                setMobileMenuOpen(false);
-                openBooking();
-              }}
-            >
-              Book a Clean
-            </Button>
+            <div className="flex flex-col gap-2 pt-2 border-t border-line">
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  requestQuote("Commercial / Free Quotation Request");
+                }}
+              >
+                Request Free Quote
+              </Button>
+              <Button
+                className="w-full"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  openBooking();
+                }}
+              >
+                Book a Clean
+              </Button>
+            </div>
           </nav>
         </motion.div>
       )}

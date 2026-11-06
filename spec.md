@@ -55,7 +55,7 @@
 - **Subheadline:** *"Fully vetted, DBS-checked professionals using eco-friendly products. Transparent pricing from £17/hr with guaranteed deposit return standards."*
 - **Trust Elements:** Trustpilot 4.9/5 stars badge, DBS-Checked badge, 100% Money-Back Guarantee icon.
 - **Quick Estimator Widget (Interactive Highlight):**
-  - Select service: *Regular Domestic*, *Deep Clean*, or *End of Tenancy*.
+  - Select service: *Regular Residential*, *Deep Clean*, or *End of Tenancy*.
   - Stepper controls for Bedrooms (`1`, `2`, `3+`) and Bathrooms (`1`, `2+`).
   - Dynamic live price readout (e.g., `Estimated: £115.00`).
   - CTA button: `[Lock in Price & Book Date] ->` pre-populates and opens the booking modal.
@@ -81,7 +81,7 @@
 ### 4.5 Section 4: Our Services
 - **Pricing Switcher:** `[One-Off Clean]` vs `[Subscribe & Save 15%]`.
 - **4 Service Cards:**
-  1. **Regular Domestic Clean:** Dusting, vacuuming, mopping, bathroom sanitation (From £18/hr).
+  1. **Regular Residential Clean:** Dusting, vacuuming, mopping, bathroom sanitation (From £18/hr).
   2. **Deep Clean:** Comprehensive top-to-bottom scrub, appliances, baseboards, grout refresh (From £120).
   3. **End of Tenancy Clean:** Designed to guarantee tenant deposit return according to agency checklists (From £165).
   4. **Office & Commercial:** Flexible after-hours or scheduled workspace sanitization (Custom quote).
