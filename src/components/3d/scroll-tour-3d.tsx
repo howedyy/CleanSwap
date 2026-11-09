@@ -65,7 +65,7 @@ export const TOUR_STAGES: TourStage[] = [
   {
     id: "contact",
     name: "5-Star Sanctuary & Bookings",
-    subtitle: "London & UK Service Coverage • 100% Satisfaction Guarantee",
+    subtitle: "Suffolk, Cambridgeshire & Cambridge Coverage • 100% Satisfaction Guarantee",
     progress: [0.86, 1.0],
     cameraPos: [0, 0.5, 7.0],
     cameraLookAt: [0, 0, 0],

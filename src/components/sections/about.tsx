@@ -23,8 +23,8 @@ const WHY_CHOOSE_US = [
   },
   {
     icon: ShieldCheck,
-    title: "Commercial Credentials",
-    description: "Full Public Liability insurance coverage, strict COSHH compliance, and rigorous health-and-safety practices.",
+    title: "Commercial & Specialist Credentials",
+    description: "Certified confined space entry, full Public Liability insurance coverage (£5M), strict COSHH compliance, and rigorous health-and-safety practices.",
   },
   {
     icon: ReceiptText,
@@ -51,7 +51,7 @@ export function About() {
         <SectionHeading
           eyebrow="About Clean Sweep Oasis"
           title="A trusted family-run business delivering exceptional property support."
-          description="We provide comprehensive cleaning and property support services to residential and commercial clients across London and the UK, with high standards, friendly service, and total reliability."
+          description="We provide comprehensive cleaning and property support services to residential and commercial clients across Suffolk, Cambridgeshire, and Cambridge, with high standards, friendly service, and total reliability."
         />
 
         {/* 6 Core Pillars with 3D Depth */}

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star, ShieldCheck, ArrowRight, BadgeCheck, Sparkles } from "lucide-react";
+import { Star, ShieldCheck, ArrowRight, BadgeCheck, Sparkles, HardHat } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/ui/section";
@@ -71,7 +71,7 @@ export function Hero() {
                 </div>
                 <div className="inline-flex items-center gap-1.5 rounded-full bg-teal-900/90 backdrop-blur-md px-3.5 py-1.5 text-xs font-semibold text-amber-200 ring-1 ring-amber-400/30 shadow-xs">
                   <Sparkles className="size-3 text-amber-400 animate-spin" />
-                  Awakened Sanctuary • London & UK Coverage
+                  Awakened Sanctuary • Suffolk, Cambridgeshire & Cambridge
                 </div>
               </div>
               <h1 className="font-display text-4xl font-bold tracking-tight text-ink sm:text-5xl lg:text-[3.8rem] lg:leading-[1.12]">
@@ -84,7 +84,7 @@ export function Hero() {
             
             <Reveal delay={0.1} y={20}>
               <p className="mt-6 text-lg text-slate-600 sm:text-xl leading-relaxed">
-                A trusted family-run business providing cleaning and property support services to residential and commercial clients across London and the UK. High standards, flexible scheduling, and competitive pricing.
+                A trusted family-run business providing cleaning and property support services to residential and commercial clients across Suffolk, Cambridgeshire, and Cambridge. High standards, flexible scheduling, and competitive pricing.
               </p>
             </Reveal>
             
@@ -109,6 +109,11 @@ export function Hero() {
                 <div className="flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-md px-3.5 py-1.5 shadow-xs ring-1 ring-slate-200 hover:ring-teal-400/50 transition-all">
                   <BadgeCheck className="size-4 text-teal-600" />
                   <span className="text-xs font-semibold text-ink">COSHH & H&S Practices</span>
+                </div>
+
+                <div className="flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-md px-3.5 py-1.5 shadow-xs ring-1 ring-slate-200 hover:ring-amber-400/40 transition-all">
+                  <HardHat className="size-4 text-amber-600" />
+                  <span className="text-xs font-semibold text-ink">Certified Confined Space</span>
                 </div>
 
                 <div className="flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-md px-3.5 py-1.5 shadow-xs ring-1 ring-slate-200 hover:ring-amber-400/40 transition-all">

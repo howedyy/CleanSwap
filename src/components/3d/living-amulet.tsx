@@ -16,7 +16,7 @@ interface SectionStage {
 const SECTIONS: SectionStage[] = [
   { id: "home", name: "Oasis Sanctuary", subtitle: "Hero & Quick Price Estimator", tag: "Phase 1", accent: "from-teal-500 to-amber-500" },
   { id: "about", name: "Trust & Standards", subtitle: "£5M Public Liability & COSHH", tag: "Phase 2", accent: "from-amber-500 to-teal-400" },
-  { id: "services", name: "Tailored Services", subtitle: "Commercial, Tenancy & Residential", tag: "Phase 3", accent: "from-teal-400 to-emerald-400" },
+  { id: "services", name: "Tailored Services", subtitle: "Commercial, Confined Space & Tenancy", tag: "Phase 3", accent: "from-teal-400 to-emerald-400" },
   { id: "process", name: "4-Step Pathway", subtitle: "Site Visit ➔ Certified Handover", tag: "Phase 4", accent: "from-amber-400 to-amber-600" },
   { id: "clients", name: "Client Feedback", subtitle: "5.0 ★ Multi-Year Partnerships", tag: "Phase 5", accent: "from-teal-500 to-cyan-400" },
   { id: "contact", name: "Free Quotations", subtitle: "Direct WhatsApp & Online Booking", tag: "Phase 6", accent: "from-amber-500 to-teal-500" },
@@ -207,34 +207,16 @@ export function LivingAmulet() {
               transform: `perspective(700px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
               transition: tilt.rotateX === 0 ? "transform 0.4s ease-out" : "none",
             }}
-            className="group relative flex items-center gap-3 rounded-full border border-amber-400/50 bg-slate-950/85 p-2 pr-4 shadow-2xl backdrop-blur-xl hover:border-amber-300 transition-all cursor-pointer ring-1 ring-white/10 hover:shadow-[0_10px_35px_-5px_rgba(245,158,11,0.45)]"
+            className="group relative flex items-center gap-3 p-1 pr-3 transition-all cursor-pointer"
           >
-            {/* The 3D Ornate Golden Horus Medallion */}
-            <div className="relative size-14 sm:size-16 rounded-full p-1 bg-linear-to-tr from-amber-600 via-amber-400 to-teal-400 shadow-xl overflow-hidden shrink-0">
-              {/* Rotating sacred glyph notches around the gold rim */}
-              <div className="absolute inset-0 rounded-full border-2 border-dashed border-amber-200/50 animate-[spin_30s_linear_infinite] pointer-events-none" />
-
-              {/* Inner Medallion Lens Housing the Photorealistic Eye */}
-              <div className="relative size-full rounded-full overflow-hidden bg-slate-950 border border-amber-300/40 shadow-inner">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/eye-sequence/frame-3.jpg"
-                  alt="Living Eye of Horus"
-                  className="size-full object-cover rounded-full scale-110 group-hover:scale-125 transition-transform duration-500"
-                />
-
-                {/* 3D Glass Cornea Glare Sheen reacting to mouse */}
-                <div
-                  className="absolute inset-0 pointer-events-none transition-opacity duration-200"
-                  style={{
-                    background: `radial-gradient(circle at ${tilt.glareX}% ${tilt.glareY}%, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0) 60%)`,
-                    mixBlendMode: "overlay",
-                  }}
-                />
-
-                {/* Center Turquoise Iris Pulse */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-2.5 rounded-full bg-teal-400/50 blur-[2px] animate-pulse pointer-events-none" />
-              </div>
+            {/* The Clean Floating Brand Logo - Frameless */}
+            <div className="relative h-11 w-16 shrink-0 flex items-center justify-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/client-logo-transparent.png"
+                alt="Clean Sweep Oasis Logo"
+                className="size-full object-contain group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_4px_12px_rgba(56,182,255,0.4)]"
+              />
             </div>
 
             {/* Medallion Status Tag */}

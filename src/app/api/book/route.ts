@@ -81,7 +81,7 @@ export async function POST(request: Request) {
     fullName: data.fullName,
     email: data.email.toLowerCase(),
     phone: normaliseUkPhone(data.phone)!,
-    postcode: data.postcode ? formatUkPostcode(data.postcode) : "London & Surrounding Areas",
+    postcode: data.postcode ? formatUkPostcode(data.postcode) : "Suffolk, Cambridgeshire & Cambridge",
     serviceType: `${SERVICES[data.serviceType]?.label ?? "Cleaning"}${subscribed ? " (Contract −15%)" : " (One-off)"}`,
     propertySpecs,
     addons: data.addons.length ? data.addons.map((a) => ADDONS[a]?.label).filter(Boolean).join(", ") : "None",

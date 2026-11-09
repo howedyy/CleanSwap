@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle2, Building2, KeyRound, Home, Sparkles, ArrowRight } from "lucide-react";
+import { CheckCircle2, Building2, KeyRound, Home, Sparkles, ArrowRight, HardHat } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Reveal, SectionHeading } from "@/components/ui/section";
@@ -27,6 +27,24 @@ const SERVICES = [
     ],
     actionType: "quote" as const,
     actionLabel: "Request Commercial Quote",
+  },
+  {
+    id: "confined" as const,
+    icon: HardHat,
+    title: "Certified Confined Space",
+    badge: "Accredited & High Risk",
+    priceText: "Bespoke Quotation",
+    priceSub: "RAMS & Site Assessment Included",
+    description: "Certified entry operatives and specialist decontamination for tanks, vessels, silos, ducts, and shafts.",
+    includes: [
+      "City & Guilds certified entry specialists",
+      "Multi-gas detectors & escape breathing apparatus",
+      "Full RAMS, risk assessments & permits to work",
+      "Silos, tanks, interceptors & ductwork",
+      "Comprehensive post-clean certification",
+    ],
+    actionType: "quote" as const,
+    actionLabel: "Request Specialist Quote",
   },
   {
     id: "tenancy" as const,
@@ -94,7 +112,7 @@ export function Services() {
         <SectionHeading
           eyebrow="Our Services"
           title="Pricing & Quotation Guide"
-          description="Clear, competitive pricing for residential, commercial, and specialist property support. Free no-obligation quotations available for every project."
+          description="Clear, competitive pricing for commercial, certified confined space, residential, and specialist property support. Free no-obligation quotations available for every project."
         />
 
         <div className="mt-12 flex justify-center">
@@ -111,10 +129,11 @@ export function Services() {
           </div>
         </div>
 
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((service, i) => {
             const Icon = service.icon;
             const isTenancy = service.id === "tenancy";
+            const isConfined = service.id === "confined";
 
             return (
               <Reveal key={service.id} delay={i * 0.08} y={20} className="flex h-full flex-col">
@@ -123,15 +142,20 @@ export function Services() {
                     className={`flex flex-col h-full rounded-3xl border p-6 sm:p-7 shadow-xs transition-all duration-300 hover:shadow-xl relative overflow-hidden ${
                       isTenancy
                         ? "border-amber-400/80 bg-linear-to-b from-amber-50/40 via-white to-white ring-2 ring-amber-400/30"
+                        : isConfined
+                        ? "border-amber-500/80 bg-linear-to-b from-amber-50/30 via-white to-white ring-2 ring-amber-400/30"
                         : "border-slate-200/80 bg-white/90 backdrop-blur-md hover:border-teal-400/50"
                     }`}
                   >
                     {isTenancy && (
                       <div className="absolute top-0 right-0 w-24 h-24 bg-amber-400/10 rounded-full blur-xl pointer-events-none" />
                     )}
+                    {isConfined && (
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/10 rounded-full blur-xl pointer-events-none" />
+                    )}
                     <div className="flex items-center justify-between mb-4">
                       <Pop3D z={30} className={`grid size-11 place-items-center rounded-2xl ${
-                        isTenancy
+                        isTenancy || isConfined
                           ? "bg-amber-100 text-amber-800 ring-1 ring-amber-300"
                           : "bg-teal-50 text-teal-700 ring-1 ring-teal-200/60"
                       }`}>
@@ -139,7 +163,7 @@ export function Services() {
                       </Pop3D>
                       <Pop3D z={25}>
                         <span className={`rounded-full px-2.5 py-1 text-[11px] font-bold shadow-xs ${
-                          isTenancy
+                          isTenancy || isConfined
                             ? "bg-amber-100 text-amber-900 border border-amber-300"
                             : "bg-slate-100 text-slate-700"
                         }`}>
@@ -153,7 +177,7 @@ export function Services() {
                     </Pop3D>
                     
                     <Pop3D z={35} className="mt-3">
-                      <span className={`text-2xl font-bold ${isTenancy ? "text-amber-700" : "text-teal-700"}`}>
+                      <span className={`text-2xl font-bold ${isTenancy || isConfined ? "text-amber-700" : "text-teal-700"}`}>
                         {service.priceText}
                       </span>
                       <p className="text-xs text-slate-500 mt-0.5">{service.priceSub}</p>
@@ -164,7 +188,7 @@ export function Services() {
                     <ul className="space-y-3 mb-8 flex-1">
                       {service.includes.map((item) => (
                         <li key={item} className="flex items-start gap-2.5 text-sm text-slate-700">
-                          <CheckCircle2 className={`size-4 shrink-0 mt-0.5 ${isTenancy ? "text-amber-600" : "text-teal-600"}`} />
+                          <CheckCircle2 className={`size-4 shrink-0 mt-0.5 ${isTenancy || isConfined ? "text-amber-600" : "text-teal-600"}`} />
                           <span>{item}</span>
                         </li>
                       ))}
@@ -172,12 +196,16 @@ export function Services() {
 
                     <Button
                       className={`w-full mt-auto font-semibold shadow-xs ${
-                        isTenancy
+                        isTenancy || isConfined
                           ? "bg-amber-600 hover:bg-amber-500 text-white"
                           : "border-teal-200 text-teal-800 hover:bg-teal-50"
                       }`}
-                      variant={isTenancy ? "primary" : "outline"}
+                      variant={isTenancy || isConfined ? "primary" : "outline"}
                       onClick={() => {
+                        if (service.id === "confined") {
+                          requestQuote("Quote Request: Certified Confined Space Cleaning");
+                          return;
+                        }
                         const svcMap: Record<string, BookingFormValues["serviceType"]> = {
                           commercial: "commercial",
                           tenancy: "tenancy",
@@ -210,7 +238,7 @@ export function Services() {
                 Need a bespoke quote for your premises or project?
               </h3>
               <p className="mt-2 text-sm text-muted">
-                Commercial premises, communal areas, end of tenancy, gardening, or odd jobs — we provide tailored quotes with zero commitment.
+                Commercial premises, certified confined spaces, communal areas, end of tenancy, gardening, or odd jobs — we provide tailored quotes with zero commitment.
               </p>
             </div>
             <div className="shrink-0 flex flex-col sm:flex-row gap-3">

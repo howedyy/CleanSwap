@@ -3,7 +3,7 @@
 ## 1. Project Overview & Localization
 - **Brand Name:** Clean Swap
 - **Industry:** Residential & Commercial Cleaning Services
-- **Target Market:** United Kingdom (UK-wide / Greater London focus)
+- **Target Market:** United Kingdom (Suffolk, Cambridgeshire & Cambridge focus)
 - **Currency & Localization:** British English (e.g., *End of Tenancy*, *Postcode*, *Hoovering*, *VAT included*), Currency in Pounds Sterling (£ GBP).
 - **Primary Objective:** High-converting, frictionless landing page where visitors can discover services, get an instant cost estimate, and complete a booking in under 60 seconds.
 - **Core Integration:** All completed bookings automatically post to a client Google Sheet via a webhook.
@@ -72,7 +72,7 @@
   - `100%` Carbon Neutral Operations
 
 ### 4.4 Section 3: Our Clients & Social Proof
-- **Commercial Clients Marquee:** Grayscale logos of Airbnb hosts, property managers, and London office spaces.
+- **Commercial Clients Marquee:** Grayscale logos of Airbnb hosts, property managers, and regional office spaces.
 - **Customer Reviews Carousel:**
   - Star ratings, customer name, location (e.g., *Sarah M., Richmond*), and service type (*End of Tenancy Clean*).
 - **Before / After Visual Showcase:**
@@ -80,11 +80,12 @@
 
 ### 4.5 Section 4: Our Services
 - **Pricing Switcher:** `[One-Off Clean]` vs `[Subscribe & Save 15%]`.
-- **4 Service Cards:**
-  1. **Regular Residential Clean:** Dusting, vacuuming, mopping, bathroom sanitation (From £18/hr).
-  2. **Deep Clean:** Comprehensive top-to-bottom scrub, appliances, baseboards, grout refresh (From £120).
-  3. **End of Tenancy Clean:** Designed to guarantee tenant deposit return according to agency checklists (From £165).
-  4. **Office & Commercial:** Flexible after-hours or scheduled workspace sanitization (Custom quote).
+- **5 Service Cards:**
+  1. **Office & Commercial:** Flexible after-hours or scheduled workspace sanitization (Custom quote).
+  2. **Certified Confined Space:** Accredited entry operatives, RAMS, breathing apparatus, silos, tanks & ducts (Bespoke quote).
+  3. **End of Tenancy Clean:** Designed to guarantee tenant deposit return according to agency checklists (From £150).
+  4. **Regular Residential Clean:** Dusting, vacuuming, mopping, bathroom sanitation (From £18/hr).
+  5. **Gardening, Windows & Odd Jobs:** Specialist equipment cleans and property maintenance (Custom quote).
 - Each card includes bullet points of what's included and a `[Select Service]` button.
 
 ### 4.6 Section 5: Contact Us & Frictionless Booking
@@ -97,7 +98,7 @@
 
 #### Component B: General Contact Form
 - Fields: Name, Email, Subject, Message.
-- Contact Details: London UK Headquarters, WhatsApp Direct Chat link, Telephone support, Opening Hours (Mon–Sat: 08:00–19:00).
+- Contact Details: Suffolk, Cambridgeshire & Cambridge Service Hub, WhatsApp Direct Chat link, Telephone support, Opening Hours (Mon–Sat: 08:00–19:00).
 
 ---
 

@@ -58,7 +58,7 @@ export function BookingSuccess({
     },
     {
       icon: MapPin,
-      label: values.postcode ? values.postcode.toUpperCase() : "London & Surrounding Areas",
+      label: values.postcode ? values.postcode.toUpperCase() : "Suffolk, Cambridgeshire & Cambridge",
       sub: values.postcode ? "Service address postcode" : "Service coverage area",
     },
   ];

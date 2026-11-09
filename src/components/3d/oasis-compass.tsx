@@ -14,7 +14,7 @@ interface SectionStage {
 const SECTIONS: SectionStage[] = [
   { id: "home", name: "Oasis Sanctuary", tag: "Hero & Estimate" },
   { id: "about", name: "Trust & Standards", tag: "£5M Insured & COSHH" },
-  { id: "services", name: "Tailored Services", tag: "Commercial & Residential" },
+  { id: "services", name: "Tailored Services", tag: "Commercial & Specialist" },
   { id: "process", name: "4-Step Pathway", tag: "Site Visit → Handover" },
   { id: "clients", name: "Client Sanctuary", tag: "5.0 ★ Client Feedback" },
   { id: "contact", name: "Get in Touch", tag: "Free Quote & Support" },
@@ -164,13 +164,13 @@ export function OasisCompass() {
               onClick={() => setIsExpanded(!isExpanded)}
               className="group flex items-center gap-3 rounded-full border border-amber-400/40 bg-slate-950/85 px-4 py-2.5 shadow-2xl backdrop-blur-xl hover:border-amber-400 transition-all cursor-pointer ring-1 ring-white/10"
             >
-              {/* Ornate Eye Jewel Icon */}
-              <div className="relative flex size-7 shrink-0 items-center justify-center rounded-full bg-linear-to-tr from-amber-400 to-teal-400 p-0.5 shadow-md group-hover:scale-110 transition-transform duration-300">
+              {/* Brand Logo Icon - Frameless */}
+              <div className="relative flex h-7 w-10 shrink-0 items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/eye-sequence/frame-3.jpg"
-                  alt="Eye of Horus"
-                  className="size-full rounded-full object-cover"
+                  src="/client-logo-transparent.png"
+                  alt="Clean Sweep Oasis Logo"
+                  className="size-full object-contain"
                 />
               </div>
 
