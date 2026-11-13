@@ -7,12 +7,12 @@ import { FormProvider, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Field, TextInput, TextArea } from "@/components/ui/field";
 import { Reveal, SectionHeading } from "@/components/ui/section";
-import { useBooking } from "@/components/booking/booking-provider";
+import { useQuote } from "@/components/quote/quote-provider";
 import { contactSchema, type ContactFormValues } from "@/lib/validation";
 import { SITE } from "@/lib/site";
 
 export function Contact() {
-  const { quoteRequest } = useBooking();
+  const { quoteRequest } = useQuote();
   const [status, setStatus] = useState<"idle" | "pending" | "success" | "error">("idle");
   const [serverError, setServerError] = useState<string | null>(null);
 
@@ -21,7 +21,7 @@ export function Contact() {
     defaultValues: { name: "", email: "", subject: "", message: "", company: "" },
   });
 
-  // Prefill subject if requested via BookingProvider (e.g. from Services section)
+  // Prefill subject if requested via QuoteProvider (e.g. from a service package)
   useEffect(() => {
     if (quoteRequest) {
       form.setValue("subject", quoteRequest.subject);

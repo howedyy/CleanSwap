@@ -45,17 +45,18 @@ export function ScrollyEyeCanvas() {
   // Mouse tilt for interactive 3D parallax feel
   const mousePos = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
 
-  // Preload logo frames
+  // Preload logo frames (frame 1 prioritized for instant first paint)
   useEffect(() => {
-    let loadedCount = 0;
     FRAME_PATHS.forEach((src, idx) => {
       const img = new Image();
+      if (idx === 0) {
+        (img as HTMLImageElement & { fetchPriority?: string }).fetchPriority = "high";
+      }
       img.src = src;
 
       const handleLoaded = () => {
-        loadedCount++;
         imagesRef.current[idx] = img;
-        if (idx === 0 || loadedCount >= 2) {
+        if (idx === 0 || !imagesRef.current[0]) {
           setImagesReady(true);
         }
       };
@@ -83,10 +84,8 @@ export function ScrollyEyeCanvas() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [handleMouseMove]);
 
-  // Main 3D Canvas Loop
+  // Main 3D Canvas Loop (starts immediately without waiting for all frames)
   useEffect(() => {
-    if (!imagesReady) return;
-
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d", { alpha: false });
@@ -331,7 +330,7 @@ export function ScrollyEyeCanvas() {
       window.removeEventListener("resize", updateCanvasSize);
       cancelAnimationFrame(animId);
     };
-  }, [imagesReady]);
+  }, []);
 
   const handleScrollDown = () => {
     const heroElem = document.getElementById("home");
@@ -353,6 +352,24 @@ export function ScrollyEyeCanvas() {
           ref={canvasRef}
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         />
+
+        {/* Instant SSR/First-Paint Placeholder Eye before Canvas hydrates */}
+        {!imagesReady && (
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+            <div className="absolute size-[420px] rounded-full bg-radial from-sky-400/25 via-sky-900/10 to-transparent blur-2xl" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/eye-sequence/logo-frame-1.png"
+              alt="Clean Sweep Oasis Brand Eye"
+              width={460}
+              height={218}
+              fetchPriority="high"
+              loading="eager"
+              decoding="sync"
+              className="relative w-[72vw] max-w-[460px] h-auto object-contain"
+            />
+          </div>
+        )}
 
         {/* Top Header Crest */}
         <div className="relative z-20 w-full pt-6 px-6 flex justify-between items-center max-w-7xl mx-auto">

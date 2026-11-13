@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Compass, Sparkles, ChevronUp, Calendar, Phone, ArrowUp } from "lucide-react";
+import { Compass, Sparkles, ChevronUp, ClipboardList, Phone, ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useBooking } from "@/components/booking/booking-provider";
+import { useQuote } from "@/components/quote/quote-provider";
 
 interface SectionStage {
   id: string;
@@ -12,7 +12,7 @@ interface SectionStage {
 }
 
 const SECTIONS: SectionStage[] = [
-  { id: "home", name: "Oasis Sanctuary", tag: "Hero & Estimate" },
+  { id: "home", name: "Oasis Sanctuary", tag: "Hero & Free Quotes" },
   { id: "about", name: "Trust & Standards", tag: "£5M Insured & COSHH" },
   { id: "services", name: "Tailored Services", tag: "Commercial & Specialist" },
   { id: "process", name: "4-Step Pathway", tag: "Site Visit → Handover" },
@@ -21,7 +21,7 @@ const SECTIONS: SectionStage[] = [
 ];
 
 export function OasisCompass() {
-  const { openBooking } = useBooking();
+  const { requestQuote } = useQuote();
   const [visible, setVisible] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [isExpanded, setIsExpanded] = useState(false);
@@ -136,13 +136,13 @@ export function OasisCompass() {
                   <button
                     type="button"
                     onClick={() => {
-                      openBooking();
+                      requestQuote("General No-Obligation Quotation");
                       setIsExpanded(false);
                     }}
                     className="flex-1 rounded-xl bg-linear-to-r from-teal-600 to-amber-600 py-2 text-xs font-bold text-white shadow-md hover:opacity-95 transition-all text-center flex items-center justify-center gap-1.5"
                   >
-                    <Calendar className="size-3.5" />
-                    <span>Book a Clean</span>
+                    <ClipboardList className="size-3.5" />
+                    <span>Free Quote</span>
                   </button>
                   <button
                     type="button"

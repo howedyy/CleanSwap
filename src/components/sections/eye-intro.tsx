@@ -3,10 +3,10 @@
 import { motion } from "framer-motion";
 import { Sparkles, ChevronDown, ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useBooking } from "@/components/booking/booking-provider";
+import { useQuote } from "@/components/quote/quote-provider";
 
 export function EyeIntro() {
-  const { openBooking } = useBooking();
+  const { requestQuote } = useQuote();
 
   const handleScrollDown = () => {
     const heroElem = document.getElementById("home");
@@ -62,12 +62,12 @@ export function EyeIntro() {
               Scroll Down to Open Eye
             </Button>
             <Button
-              onClick={() => openBooking()}
+              onClick={() => requestQuote("General No-Obligation Quotation")}
               variant="outline"
               size="sm"
               className="border-teal-200 bg-white/80 hover:bg-teal-50 text-teal-800"
             >
-              Book a Clean
+              Get a Free Quote
             </Button>
           </div>
         </div>

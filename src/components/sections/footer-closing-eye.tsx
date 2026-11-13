@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Sparkles, ArrowUp, Calendar, Phone, ShieldCheck } from "lucide-react";
-import { useBooking } from "@/components/booking/booking-provider";
+import { Sparkles, ArrowUp, ClipboardList, Phone, ShieldCheck } from "lucide-react";
+import { useQuote } from "@/components/quote/quote-provider";
 import { SITE } from "@/lib/site";
 
 const CLOSING_FRAME_PATHS = [
@@ -12,15 +12,37 @@ const CLOSING_FRAME_PATHS = [
 ];
 
 export function FooterClosingEye() {
-  const { openBooking } = useBooking();
+  const { requestQuote } = useQuote();
   const sectionRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const [imagesReady, setImagesReady] = useState(false);
+  const [inView, setInView] = useState(false);
   const [closeProgress, setCloseProgress] = useState(0);
 
-  // Preload closing frames
+  // Only preload footer frames when user scrolls near the footer
   useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setInView(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "500px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Preload closing frames once near viewport
+  useEffect(() => {
+    if (!inView) return;
     let loadedCount = 0;
     const loadedImages: HTMLImageElement[] = [];
 
@@ -42,7 +64,7 @@ export function FooterClosingEye() {
         img.onerror = () => console.error("Failed to load closing logo frame:", src);
       }
     });
-  }, []);
+  }, [inView]);
 
   // Canvas render & scroll loop
   useEffect(() => {
@@ -219,11 +241,11 @@ export function FooterClosingEye() {
             <div className="mt-8 flex flex-wrap gap-4 w-full sm:w-auto">
               <button
                 type="button"
-                onClick={() => openBooking({ frequency: "one-off" })}
+                onClick={() => requestQuote("General No-Obligation Quotation")}
                 className="flex items-center justify-center gap-2 rounded-2xl bg-linear-to-r from-teal-500 to-amber-500 hover:from-teal-400 hover:to-amber-400 px-7 py-3.5 text-sm font-bold text-slate-950 shadow-xl transition-all cursor-pointer hover:shadow-teal-500/25 hover:scale-[1.02] active:scale-[0.98]"
               >
-                <Calendar className="size-4" />
-                <span>Book a Clean in 60s</span>
+                <ClipboardList className="size-4" />
+                <span>Get a Free Quote</span>
               </button>
 
               <a

@@ -1,6 +1,6 @@
 import { Header } from "@/components/sections/header";
 import { ScrollyEyeCanvas } from "@/components/3d/scrolly-eye-canvas";
-import { SpatialOasisWorld } from "@/components/3d/spatial-oasis-world";
+import { SpatialOasisLazy } from "@/components/3d/spatial-oasis-lazy";
 import { LivingAmulet } from "@/components/3d/living-amulet";
 import { Hero } from "@/components/sections/hero";
 import { About } from "@/components/sections/about";
@@ -16,7 +16,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <>
-      <SpatialOasisWorld />
+      <SpatialOasisLazy />
       <Header />
       <LivingAmulet />
       <main className="relative z-10">
@@ -55,7 +55,7 @@ export default function Home() {
                 <li><Link href="#services" className="hover:text-white transition-colors">Commercial Cleaning</Link></li>
                 <li><Link href="#services" className="hover:text-white transition-colors">Certified Confined Space</Link></li>
                 <li><Link href="#services" className="hover:text-white transition-colors">End of Tenancy Cleaning</Link></li>
-                <li><Link href="#services" className="hover:text-white transition-colors">Residential & Deep Cleaning</Link></li>
+                <li><Link href="#services" className="hover:text-white transition-colors">Deep Cleaning</Link></li>
                 <li><Link href="#services" className="hover:text-white transition-colors">Carpet & Windows Cleaning</Link></li>
                 <li><Link href="#services" className="hover:text-white transition-colors">Gardening & Odd Jobs</Link></li>
               </ul>

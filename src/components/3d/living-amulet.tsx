@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState, useRef, useCallback } from "react";
-import { Sparkles, Calendar, ArrowUp, Compass, ChevronRight, X } from "lucide-react";
+import { Sparkles, ClipboardList, ArrowUp, Compass, ChevronRight, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useBooking } from "@/components/booking/booking-provider";
+import { useQuote } from "@/components/quote/quote-provider";
 
 interface SectionStage {
   id: string;
@@ -14,16 +14,16 @@ interface SectionStage {
 }
 
 const SECTIONS: SectionStage[] = [
-  { id: "home", name: "Oasis Sanctuary", subtitle: "Hero & Quick Price Estimator", tag: "Phase 1", accent: "from-teal-500 to-amber-500" },
+  { id: "home", name: "Oasis Sanctuary", subtitle: "Hero & Free Quotes", tag: "Phase 1", accent: "from-teal-500 to-amber-500" },
   { id: "about", name: "Trust & Standards", subtitle: "£5M Public Liability & COSHH", tag: "Phase 2", accent: "from-amber-500 to-teal-400" },
-  { id: "services", name: "Tailored Services", subtitle: "Commercial, Confined Space & Tenancy", tag: "Phase 3", accent: "from-teal-400 to-emerald-400" },
+  { id: "services", name: "Tailored Services", subtitle: "Commercial, Deep Clean & Confined Space", tag: "Phase 3", accent: "from-teal-400 to-emerald-400" },
   { id: "process", name: "4-Step Pathway", subtitle: "Site Visit ➔ Certified Handover", tag: "Phase 4", accent: "from-amber-400 to-amber-600" },
   { id: "clients", name: "Client Feedback", subtitle: "5.0 ★ Multi-Year Partnerships", tag: "Phase 5", accent: "from-teal-500 to-cyan-400" },
-  { id: "contact", name: "Free Quotations", subtitle: "Direct WhatsApp & Online Booking", tag: "Phase 6", accent: "from-amber-500 to-teal-500" },
+  { id: "contact", name: "Free Quotations", subtitle: "Direct WhatsApp & Free Quote", tag: "Phase 6", accent: "from-amber-500 to-teal-500" },
 ];
 
 export function LivingAmulet() {
-  const { openBooking } = useBooking();
+  const { requestQuote } = useQuote();
   const [visible, setVisible] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [isExpanded, setIsExpanded] = useState(false);
@@ -175,13 +175,13 @@ export function LivingAmulet() {
                   <button
                     type="button"
                     onClick={() => {
-                      openBooking();
+                      requestQuote("General No-Obligation Quotation");
                       setIsExpanded(false);
                     }}
                     className="flex-1 rounded-xl bg-linear-to-r from-teal-600 via-teal-500 to-amber-600 py-2.5 text-xs font-bold text-white shadow-lg hover:brightness-110 transition-all flex items-center justify-center gap-1.5"
                   >
-                    <Calendar className="size-3.5" />
-                    <span>Instant Booking</span>
+                    <ClipboardList className="size-3.5" />
+                    <span>Free Quote</span>
                   </button>
                   <button
                     type="button"

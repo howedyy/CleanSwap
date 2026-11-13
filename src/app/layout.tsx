@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
-import { BookingProvider } from "@/components/booking/booking-provider";
+import { QuoteProvider } from "@/components/quote/quote-provider";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
@@ -14,7 +14,7 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "Clean Sweep Oasis LTD | Professional Cleaning & Property Services",
   description:
-    "Trusted family-run cleaning & property support services across Suffolk, Cambridgeshire, and Cambridge. Commercial cleaning from £25/hr, End of Tenancy from £150, gardening & specialist cleans. Fully insured with free no-obligation quotes.",
+    "Trusted family-run cleaning & property support services across Suffolk, Cambridgeshire, and Cambridge. Commercial & deep cleaning from £25/hr, End of Tenancy from £150, gardening & specialist cleans. Fully insured with free no-obligation quotes.",
   keywords: [
     "Clean Sweep Oasis",
     "commercial cleaning Cambridge",
@@ -50,7 +50,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-scroll-behavior="smooth"
     >
       <body className="min-h-dvh">
-        <BookingProvider>{children}</BookingProvider>
+        <QuoteProvider>{children}</QuoteProvider>
       </body>
     </html>
   );

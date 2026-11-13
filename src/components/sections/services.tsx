@@ -1,17 +1,45 @@
 "use client";
 
-import { CheckCircle2, Building2, KeyRound, Home, Sparkles, ArrowRight, HardHat } from "lucide-react";
+import * as Dialog from "@radix-ui/react-dialog";
+import {
+  ArrowRight,
+  Building2,
+  CheckCircle2,
+  HardHat,
+  KeyRound,
+  MapPin,
+  Phone,
+  Sparkles,
+  SprayCan,
+  X,
+  type LucideIcon,
+} from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Reveal, SectionHeading } from "@/components/ui/section";
 import { Card3D, Pop3D } from "@/components/ui/card-3d";
-import { useBooking } from "@/components/booking/booking-provider";
-import { Segmented } from "@/components/ui/controls";
-import type { BookingFormValues } from "@/lib/validation";
+import { useQuote } from "@/components/quote/quote-provider";
+import { SITE } from "@/lib/site";
 
-const SERVICES = [
+interface ServicePackage {
+  id: string;
+  icon: LucideIcon;
+  title: string;
+  badge: string;
+  priceText: string;
+  priceSub: string;
+  description: string;
+  includes: string[];
+  idealFor: string[];
+  howPricingWorks: string;
+  quoteSubject: string;
+  actionLabel: string;
+  accent: "teal" | "amber";
+}
+
+const SERVICES: ServicePackage[] = [
   {
-    id: "commercial" as const,
+    id: "commercial",
     icon: Building2,
     title: "Commercial Cleaning",
     badge: "Most Popular for Businesses",
@@ -25,11 +53,37 @@ const SERVICES = [
       "Restroom sanitation & waste handling",
       "Flexible early morning / evening timing",
     ],
-    actionType: "quote" as const,
+    idealFor: ["Offices & studios", "Shops & showrooms", "Residential blocks & communal areas", "Clinics, gyms & workshops"],
+    howPricingWorks:
+      "Priced from £25 per hour. The final price depends on the size of your premises, how often we visit and the hours that suit you. We confirm everything in a free, no-obligation quote.",
+    quoteSubject: "Quote Request: Commercial Cleaning",
     actionLabel: "Request Commercial Quote",
+    accent: "teal",
   },
   {
-    id: "confined" as const,
+    id: "deep",
+    icon: SprayCan,
+    title: "Deep Cleaning",
+    badge: "Family-Run Quality",
+    priceText: "From £25/hr",
+    priceSub: "One-off or recurring visits",
+    description: "A thorough top-to-bottom clean for homes and properties that need more than a standard visit.",
+    includes: [
+      "Kitchens: hobs, extractors, cupboards & oven detailing",
+      "Bathrooms: descaling, grout & tile scrub",
+      "Skirting boards, doors, frames & switches",
+      "Inside windows, sills & mirrors",
+      "Dusting high & low, vacuuming & mopping throughout",
+    ],
+    idealFor: ["Seasonal or spring cleans", "Moving in or out", "Before or after events", "First clean before a regular schedule"],
+    howPricingWorks:
+      "Priced from £25 per hour. The time needed depends on the size and condition of the property, so we agree an estimate with you up front in a free quote. Recurring visits can be arranged afterwards.",
+    quoteSubject: "Quote Request: Deep Cleaning",
+    actionLabel: "Request Deep Clean Quote",
+    accent: "teal",
+  },
+  {
+    id: "confined",
     icon: HardHat,
     title: "Certified Confined Space",
     badge: "Accredited & High Risk",
@@ -43,11 +97,15 @@ const SERVICES = [
       "Silos, tanks, interceptors & ductwork",
       "Comprehensive post-clean certification",
     ],
-    actionType: "quote" as const,
+    idealFor: ["Tanks, vessels & silos", "Grease interceptors & drains", "Ductwork & shafts", "Industrial & agricultural sites"],
+    howPricingWorks:
+      "Every confined space job is different, so each one is quoted individually after a site assessment. The quote includes the risk assessment and method statement (RAMS).",
+    quoteSubject: "Quote Request: Certified Confined Space Cleaning",
     actionLabel: "Request Specialist Quote",
+    accent: "amber",
   },
   {
-    id: "tenancy" as const,
+    id: "tenancy",
     icon: KeyRound,
     title: "End of Tenancy Clean",
     badge: "Agency Checklist Standard",
@@ -61,29 +119,15 @@ const SERVICES = [
       "Deep bathroom descaling & tiles",
       "Deposit return guarantee standard",
     ],
-    actionType: "book" as const,
-    actionLabel: "Book Tenancy Clean",
+    idealFor: ["Tenants moving out", "Landlords between lets", "Letting agents", "Properties with an inventory checklist"],
+    howPricingWorks:
+      "Priced from £150 and based on the size of the property (bedrooms and bathrooms). Tell us the details and we'll confirm a fixed price in a free quote.",
+    quoteSubject: "Quote Request: End of Tenancy Clean",
+    actionLabel: "Request Tenancy Quote",
+    accent: "amber",
   },
   {
-    id: "regular" as const,
-    icon: Home,
-    title: "Residential & Deep Cleaning",
-    badge: "Family-Run Quality",
-    priceText: "From £18/hr",
-    priceSub: "Deep Cleans from £120",
-    description: "Reliable residential visits or thorough deep cleans tailored around your home life.",
-    includes: [
-      "Deep cleaning & one-off visits",
-      "Recurring weekly / fortnightly cleans",
-      "Kitchens, bathrooms & living spaces",
-      "High touchpoint sanitation & dusting",
-      "Friendly, trusted family-run cleaners",
-    ],
-    actionType: "book" as const,
-    actionLabel: "Book Residential Clean",
-  },
-  {
-    id: "specialist" as const,
+    id: "specialist",
     icon: Sparkles,
     title: "Gardening, Windows & Odd Jobs",
     badge: "Tailored to Each Project",
@@ -97,14 +141,43 @@ const SERVICES = [
       "Odd jobs & property repairs support",
       "Custom project estimates",
     ],
-    actionType: "quote" as const,
+    idealFor: ["Homes & gardens", "Shopfronts & offices", "Landlords & property managers", "One-off tidy-ups and projects"],
+    howPricingWorks:
+      "Each project is quoted separately based on its size and the equipment needed. Describe the job and we'll reply with a free, no-obligation price.",
+    quoteSubject: "Quote Request: Gardening, Windows & Odd Jobs",
     actionLabel: "Get Project Quote",
+    accent: "teal",
   },
 ];
 
+const ACCENT = {
+  teal: {
+    iconWrap: "bg-teal-50 text-teal-700 ring-1 ring-teal-200/60",
+    badge: "bg-slate-100 text-slate-700",
+    price: "text-teal-700",
+    check: "text-teal-600",
+    card: "border-slate-200/80 bg-white/90 backdrop-blur-md hover:border-teal-400/50",
+    link: "text-teal-700",
+  },
+  amber: {
+    iconWrap: "bg-amber-100 text-amber-800 ring-1 ring-amber-300",
+    badge: "bg-amber-100 text-amber-900 border border-amber-300",
+    price: "text-amber-700",
+    check: "text-amber-600",
+    card: "border-amber-400/70 bg-linear-to-b from-amber-50/40 via-white to-white ring-2 ring-amber-400/20 hover:border-amber-500",
+    link: "text-amber-700",
+  },
+} as const;
+
 export function Services() {
-  const { openBooking, requestQuote } = useBooking();
-  const [frequency, setFrequency] = useState<BookingFormValues["frequency"]>("one-off");
+  const { requestQuote } = useQuote();
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const active = SERVICES.find((s) => s.id === activeId) ?? null;
+
+  const handleQuote = (service: ServicePackage) => {
+    setActiveId(null);
+    requestQuote(service.quoteSubject);
+  };
 
   return (
     <section id="services" className="py-20 sm:py-28 bg-surface/65 backdrop-blur-md relative z-10">
@@ -112,61 +185,37 @@ export function Services() {
         <SectionHeading
           eyebrow="Our Services"
           title="Pricing & Quotation Guide"
-          description="Clear, competitive pricing for commercial, certified confined space, residential, and specialist property support. Free no-obligation quotations available for every project."
+          description="Clear, competitive pricing for commercial, deep cleaning, certified confined space and specialist property support. Tap any package for full details. Free no-obligation quotations available for every project."
         />
-
-        <div className="mt-12 flex justify-center">
-          <div className="w-full max-w-xs">
-            <Segmented
-              label="Frequency"
-              options={[
-                { value: "one-off", label: "One-Off / Project" },
-                { value: "subscription", label: "Regular Contract (Save 15%)" },
-              ]}
-              value={frequency}
-              onChange={setFrequency}
-            />
-          </div>
-        </div>
 
         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((service, i) => {
             const Icon = service.icon;
-            const isTenancy = service.id === "tenancy";
-            const isConfined = service.id === "confined";
+            const a = ACCENT[service.accent];
 
             return (
               <Reveal key={service.id} delay={i * 0.08} y={20} className="flex h-full flex-col">
                 <Card3D depth={10} className="rounded-3xl">
                   <div
-                    className={`flex flex-col h-full rounded-3xl border p-6 sm:p-7 shadow-xs transition-all duration-300 hover:shadow-xl relative overflow-hidden ${
-                      isTenancy
-                        ? "border-amber-400/80 bg-linear-to-b from-amber-50/40 via-white to-white ring-2 ring-amber-400/30"
-                        : isConfined
-                        ? "border-amber-500/80 bg-linear-to-b from-amber-50/30 via-white to-white ring-2 ring-amber-400/30"
-                        : "border-slate-200/80 bg-white/90 backdrop-blur-md hover:border-teal-400/50"
-                    }`}
+                    role="button"
+                    tabIndex={0}
+                    aria-haspopup="dialog"
+                    aria-label={`View ${service.title} package details`}
+                    onClick={() => setActiveId(service.id)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setActiveId(service.id);
+                      }
+                    }}
+                    className={`group flex flex-col h-full cursor-pointer rounded-3xl border p-6 sm:p-7 shadow-xs transition-all duration-300 hover:shadow-xl relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 ${a.card}`}
                   >
-                    {isTenancy && (
-                      <div className="absolute top-0 right-0 w-24 h-24 bg-amber-400/10 rounded-full blur-xl pointer-events-none" />
-                    )}
-                    {isConfined && (
-                      <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/10 rounded-full blur-xl pointer-events-none" />
-                    )}
                     <div className="flex items-center justify-between mb-4">
-                      <Pop3D z={30} className={`grid size-11 place-items-center rounded-2xl ${
-                        isTenancy || isConfined
-                          ? "bg-amber-100 text-amber-800 ring-1 ring-amber-300"
-                          : "bg-teal-50 text-teal-700 ring-1 ring-teal-200/60"
-                      }`}>
+                      <Pop3D z={30} className={`grid size-11 place-items-center rounded-2xl ${a.iconWrap}`}>
                         <Icon className="size-5" />
                       </Pop3D>
                       <Pop3D z={25}>
-                        <span className={`rounded-full px-2.5 py-1 text-[11px] font-bold shadow-xs ${
-                          isTenancy || isConfined
-                            ? "bg-amber-100 text-amber-900 border border-amber-300"
-                            : "bg-slate-100 text-slate-700"
-                        }`}>
+                        <span className={`rounded-full px-2.5 py-1 text-[11px] font-bold shadow-xs ${a.badge}`}>
                           {service.badge}
                         </span>
                       </Pop3D>
@@ -175,51 +224,27 @@ export function Services() {
                     <Pop3D z={20}>
                       <h3 className="font-display text-xl font-bold text-slate-900">{service.title}</h3>
                     </Pop3D>
-                    
+
                     <Pop3D z={35} className="mt-3">
-                      <span className={`text-2xl font-bold ${isTenancy || isConfined ? "text-amber-700" : "text-teal-700"}`}>
-                        {service.priceText}
-                      </span>
+                      <span className={`text-2xl font-bold ${a.price}`}>{service.priceText}</span>
                       <p className="text-xs text-slate-500 mt-0.5">{service.priceSub}</p>
                     </Pop3D>
 
-                    <p className="mt-3 text-sm text-slate-600 mb-6 leading-relaxed">{service.description}</p>
+                    <p className="mt-3 text-sm text-slate-600 mb-5 leading-relaxed">{service.description}</p>
 
-                    <ul className="space-y-3 mb-8 flex-1">
-                      {service.includes.map((item) => (
+                    <ul className="space-y-2.5 mb-6 flex-1">
+                      {service.includes.slice(0, 3).map((item) => (
                         <li key={item} className="flex items-start gap-2.5 text-sm text-slate-700">
-                          <CheckCircle2 className={`size-4 shrink-0 mt-0.5 ${isTenancy || isConfined ? "text-amber-600" : "text-teal-600"}`} />
+                          <CheckCircle2 className={`size-4 shrink-0 mt-0.5 ${a.check}`} />
                           <span>{item}</span>
                         </li>
                       ))}
                     </ul>
 
-                    <Button
-                      className={`w-full mt-auto font-semibold shadow-xs ${
-                        isTenancy || isConfined
-                          ? "bg-amber-600 hover:bg-amber-500 text-white"
-                          : "border-teal-200 text-teal-800 hover:bg-teal-50"
-                      }`}
-                      variant={isTenancy || isConfined ? "primary" : "outline"}
-                      onClick={() => {
-                        if (service.id === "confined") {
-                          requestQuote("Quote Request: Certified Confined Space Cleaning");
-                          return;
-                        }
-                        const svcMap: Record<string, BookingFormValues["serviceType"]> = {
-                          commercial: "commercial",
-                          tenancy: "tenancy",
-                          regular: "regular",
-                          specialist: "specialist",
-                        };
-                        openBooking({
-                          serviceType: svcMap[service.id] ?? "commercial",
-                          frequency,
-                        });
-                      }}
-                    >
-                      {service.actionLabel}
-                    </Button>
+                    <span className={`mt-auto inline-flex items-center gap-1.5 text-sm font-semibold ${a.link}`}>
+                      View package details
+                      <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                    </span>
                   </div>
                 </Card3D>
               </Reveal>
@@ -238,15 +263,11 @@ export function Services() {
                 Need a bespoke quote for your premises or project?
               </h3>
               <p className="mt-2 text-sm text-muted">
-                Commercial premises, certified confined spaces, communal areas, end of tenancy, gardening, or odd jobs — we provide tailored quotes with zero commitment.
+                Commercial premises, deep cleaning, certified confined spaces, end of tenancy, gardening, or odd jobs — we provide tailored quotes with zero commitment.
               </p>
             </div>
             <div className="shrink-0 flex flex-col sm:flex-row gap-3">
-              <Button
-                size="lg"
-                onClick={() => requestQuote("General No-Obligation Quotation")}
-                className="group"
-              >
+              <Button size="lg" onClick={() => requestQuote("General No-Obligation Quotation")} className="group">
                 Request Free Quote
                 <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
               </Button>
@@ -254,6 +275,97 @@ export function Services() {
           </div>
         </Reveal>
       </div>
+
+      {/* Package details dialog */}
+      <Dialog.Root open={active !== null} onOpenChange={(o) => !o && setActiveId(null)}>
+        <Dialog.Portal>
+          <Dialog.Overlay className="cs-overlay fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm" />
+          <Dialog.Content
+            className="cs-modal fixed left-1/2 top-1/2 z-50 flex max-h-[90dvh] w-[calc(100%-2rem)] max-w-xl -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-3xl bg-white shadow-2xl ring-1 ring-slate-200 focus:outline-none"
+            aria-describedby={undefined}
+          >
+            {active && (() => {
+              const Icon = active.icon;
+              const a = ACCENT[active.accent];
+              return (
+                <>
+                  <div className="flex items-start justify-between gap-4 border-b border-slate-100 p-6">
+                    <div className="flex items-start gap-4">
+                      <div className={`grid size-12 shrink-0 place-items-center rounded-2xl ${a.iconWrap}`}>
+                        <Icon className="size-6" />
+                      </div>
+                      <div>
+                        <span className={`inline-block rounded-full px-2.5 py-0.5 text-[11px] font-bold ${a.badge}`}>
+                          {active.badge}
+                        </span>
+                        <Dialog.Title className="mt-1.5 font-display text-2xl font-bold text-slate-900">
+                          {active.title}
+                        </Dialog.Title>
+                        <p className={`mt-1 text-xl font-bold ${a.price}`}>{active.priceText}</p>
+                        <p className="text-xs text-slate-500">{active.priceSub}</p>
+                      </div>
+                    </div>
+                    <Dialog.Close
+                      aria-label="Close"
+                      className="-mr-2 -mt-2 rounded-full p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-colors"
+                    >
+                      <X className="size-5" />
+                    </Dialog.Close>
+                  </div>
+
+                  <div className="space-y-6 overflow-y-auto p-6">
+                    <p className="text-sm leading-relaxed text-slate-600">{active.description}</p>
+
+                    <div>
+                      <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900">What&apos;s included</h4>
+                      <ul className="mt-3 space-y-2.5">
+                        {active.includes.map((item) => (
+                          <li key={item} className="flex items-start gap-2.5 text-sm text-slate-700">
+                            <CheckCircle2 className={`mt-0.5 size-4 shrink-0 ${a.check}`} />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900">Ideal for</h4>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {active.idealFor.map((item) => (
+                          <span key={item} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-200/80">
+                      <h4 className="text-sm font-bold text-slate-900">How pricing works</h4>
+                      <p className="mt-1.5 text-sm leading-relaxed text-slate-600">{active.howPricingWorks}</p>
+                      <p className="mt-3 flex items-center gap-1.5 text-xs text-slate-500">
+                        <MapPin className="size-3.5" /> Serving Suffolk, Cambridgeshire &amp; Cambridge
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-3 border-t border-slate-100 bg-slate-50/60 p-5 sm:flex-row">
+                    <Button size="lg" className="group flex-1" onClick={() => handleQuote(active)}>
+                      {active.actionLabel}
+                      <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                    </Button>
+                    <Button asChild size="lg" variant="outline" className="sm:w-auto">
+                      <a href={SITE.phoneHref}>
+                        <Phone className="size-4" />
+                        {SITE.phoneDisplay}
+                      </a>
+                    </Button>
+                  </div>
+                </>
+              );
+            })()}
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
     </section>
   );
 }
