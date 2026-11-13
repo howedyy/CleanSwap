@@ -13,7 +13,8 @@ export const SITE = {
   whatsappHref:
     "https://wa.me/447566227825?text=" +
     encodeURIComponent("Hi Clean Sweep Oasis, I would like to request a free quotation."),
-  address: ["Clean Sweep Oasis LTD", "London & Surrounding Areas, United Kingdom"],
+  address: ["Clean Sweep Oasis LTD", "Suffolk, Cambridgeshire & Cambridge, United Kingdom"],
+  serviceAreas: ["Suffolk", "Cambridgeshire", "Cambridge"],
   hours: "Mon–Sat: 08:00–19:00 (Flexible commercial hours)",
   credentials: [
     "Public Liability Insured",

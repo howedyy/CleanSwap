@@ -1,6 +1,6 @@
 import { Header } from "@/components/sections/header";
 import { ScrollyEyeCanvas } from "@/components/3d/scrolly-eye-canvas";
-import { SpatialOasisWorld } from "@/components/3d/spatial-oasis-world";
+import { SpatialOasisLazy } from "@/components/3d/spatial-oasis-lazy";
 import { LivingAmulet } from "@/components/3d/living-amulet";
 import { Hero } from "@/components/sections/hero";
 import { About } from "@/components/sections/about";
@@ -16,7 +16,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <>
-      <SpatialOasisWorld />
+      <SpatialOasisLazy />
       <Header />
       <LivingAmulet />
       <main className="relative z-10">
@@ -40,7 +40,7 @@ export default function Home() {
             <div className="md:col-span-2">
               <BrandLogo variant="dark" />
               <p className="mt-4 text-sm text-slate-400 max-w-md leading-relaxed">
-                A trusted family-run business providing cleaning and property support services to residential and commercial clients across London and the UK.
+                A trusted family-run business providing cleaning and property support services to residential and commercial clients across Suffolk, Cambridgeshire, and Cambridge.
               </p>
               <div className="mt-4 flex flex-wrap gap-2 text-xs text-slate-300">
                 <span className="rounded bg-slate-800/80 px-2.5 py-1">Public Liability Insured (£5M)</span>
@@ -53,8 +53,9 @@ export default function Home() {
               <h4 className="text-sm font-semibold text-white uppercase tracking-wider">Services</h4>
               <ul className="mt-4 space-y-2.5 text-sm">
                 <li><Link href="#services" className="hover:text-white transition-colors">Commercial Cleaning</Link></li>
+                <li><Link href="#services" className="hover:text-white transition-colors">Certified Confined Space</Link></li>
                 <li><Link href="#services" className="hover:text-white transition-colors">End of Tenancy Cleaning</Link></li>
-                <li><Link href="#services" className="hover:text-white transition-colors">Residential & Deep Cleaning</Link></li>
+                <li><Link href="#services" className="hover:text-white transition-colors">Deep Cleaning</Link></li>
                 <li><Link href="#services" className="hover:text-white transition-colors">Carpet & Windows Cleaning</Link></li>
                 <li><Link href="#services" className="hover:text-white transition-colors">Gardening & Odd Jobs</Link></li>
               </ul>
@@ -93,7 +94,7 @@ export default function Home() {
 
           <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
             <p>© 2026 Clean Sweep Oasis LTD. All rights reserved.</p>
-            <p>London & Surrounding Areas, United Kingdom.</p>
+            <p>Suffolk, Cambridgeshire & Cambridge, United Kingdom.</p>
           </div>
         </div>
       </footer>

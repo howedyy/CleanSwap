@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
-import { BookingProvider } from "@/components/booking/booking-provider";
+import { QuoteProvider } from "@/components/quote/quote-provider";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
@@ -14,20 +14,25 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "Clean Sweep Oasis LTD | Professional Cleaning & Property Services",
   description:
-    "Trusted family-run cleaning & property support services across London and the UK. Commercial cleaning from £25/hr, End of Tenancy from £150, gardening & specialist cleans. Fully insured with free no-obligation quotes.",
+    "Trusted family-run cleaning & property support services across Suffolk, Cambridgeshire, and Cambridge. Commercial & deep cleaning from £25/hr, End of Tenancy from £150, gardening & specialist cleans. Fully insured with free no-obligation quotes.",
   keywords: [
     "Clean Sweep Oasis",
-    "commercial cleaning London",
-    "office cleaning",
-    "end of tenancy cleaning",
-    "deep clean London",
+    "commercial cleaning Cambridge",
+    "cleaning services Suffolk",
+    "cleaners Cambridgeshire",
+    "commercial cleaning Suffolk",
+    "certified confined space cleaning",
+    "confined space entry UK",
+    "office cleaning Cambridge",
+    "end of tenancy cleaning Cambridge",
+    "deep clean Cambridge",
     "family run cleaners",
     "gardening odd jobs",
     "residential cleaner UK",
   ],
   openGraph: {
     title: "Clean Sweep Oasis LTD — Reliable • Professional • Family Run",
-    description: "High standard residential, commercial and specialist cleaning services across London & the UK.",
+    description: "High standard commercial, certified confined space, residential, and specialist cleaning services across Suffolk, Cambridgeshire, and Cambridge.",
     locale: "en_GB",
     type: "website",
   },
@@ -45,7 +50,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-scroll-behavior="smooth"
     >
       <body className="min-h-dvh">
-        <BookingProvider>{children}</BookingProvider>
+        <QuoteProvider>{children}</QuoteProvider>
       </body>
     </html>
   );

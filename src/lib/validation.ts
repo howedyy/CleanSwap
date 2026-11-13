@@ -1,16 +1,5 @@
+
 import { z } from "zod";
-import {
-  ADDON_IDS,
-  BATHROOM_OPTIONS,
-  BEDROOM_OPTIONS,
-  COMMERCIAL_HOURS,
-  COMMERCIAL_TYPES,
-  FREQUENCIES,
-  SERVICE_IDS,
-  SPECIALIST_HOURS,
-  SPECIALIST_TYPES,
-  TIME_SLOTS,
-} from "./pricing";
 
 /* -------------------------------------------------------------------------- */
 /*                                UK postcodes                                */
@@ -59,48 +48,6 @@ export function isValidEmail(value: string) {
 /* -------------------------------------------------------------------------- */
 /*                                  Schemas                                   */
 /* -------------------------------------------------------------------------- */
-
-export const bookingSchema = z.object({
-  // Step 1 — Scope
-  serviceType: z.enum(SERVICE_IDS, { error: "Choose a service" }),
-  bedrooms: z.enum(BEDROOM_OPTIONS),
-  bathrooms: z.enum(BATHROOM_OPTIONS),
-  commercialType: z.enum(COMMERCIAL_TYPES),
-  commercialHours: z.enum(COMMERCIAL_HOURS),
-  specialistType: z.enum(SPECIALIST_TYPES),
-  specialistHours: z.enum(SPECIALIST_HOURS),
-  frequency: z.enum(FREQUENCIES),
-  addons: z.array(z.enum(ADDON_IDS)).max(ADDON_IDS.length),
-  // Step 2 — Schedule
-  postcode: z.string().trim().optional(),
-  preferredDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Pick a date for your clean"),
-  timeSlot: z.enum(TIME_SLOTS, { error: "Pick a time slot" }),
-  // Step 3 — Customer info
-  fullName: z.string().trim().min(2, "Please enter your full name").max(80, "Name is too long"),
-  phone: z.string().trim().refine(isValidUkPhone, "Enter a valid UK number, e.g. 07700 900123"),
-  email: z.string().trim().refine(isValidEmail, "Enter a valid email address"),
-  notes: z.string().trim().max(500, "Please keep notes under 500 characters").optional(),
-  // Honeypot — real users never see or fill this.
-  company: z.string().max(0).optional(),
-});
-
-export type BookingFormValues = z.infer<typeof bookingSchema>;
-
-export const BOOKING_STEP_FIELDS = [
-  [
-    "serviceType",
-    "bedrooms",
-    "bathrooms",
-    "commercialType",
-    "commercialHours",
-    "specialistType",
-    "specialistHours",
-    "frequency",
-    "addons",
-  ],
-  ["preferredDate", "timeSlot"],
-  ["fullName", "phone", "email", "notes"],
-] as const satisfies readonly (readonly (keyof BookingFormValues)[])[];
 
 export const contactSchema = z.object({
   name: z.string().trim().min(2, "Please enter your name").max(80),

@@ -1,0 +1,39 @@
+services:
+  cleansweepoasis:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cleansweepoasis:latest
+    container_name: cleansweepoasis
+    restart: unless-stopped
+    # Runtime secrets (e.g. GOOGLE_SCRIPT_CONTACT_WEBHOOK_URL) live in a .env file on the server.
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+    expose:
+      - "3000"
+    networks:
+      - web
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:3000/ || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=web"
+      # HTTPS router for apex + www
+      - "traefik.http.routers.cleansweepoasis.rule=Host(`cleansweepoasis.com`) || Host(`www.cleansweepoasis.com`)"
+      - "traefik.http.routers.cleansweepoasis.entrypoints=websecure"
+      - "traefik.http.routers.cleansweepoasis.tls=true"
+      - "traefik.http.routers.cleansweepoasis.tls.certresolver=letsencrypt"
+      # Next.js listens on 3000 inside the container
+      - "traefik.http.services.cleansweepoasis.loadbalancer.server.port=3000"
+
+networks:
+  web:
+    external: true

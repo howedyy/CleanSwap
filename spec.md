@@ -3,10 +3,10 @@
 ## 1. Project Overview & Localization
 - **Brand Name:** Clean Swap
 - **Industry:** Residential & Commercial Cleaning Services
-- **Target Market:** United Kingdom (UK-wide / Greater London focus)
+- **Target Market:** United Kingdom (Suffolk, Cambridgeshire & Cambridge focus)
 - **Currency & Localization:** British English (e.g., *End of Tenancy*, *Postcode*, *Hoovering*, *VAT included*), Currency in Pounds Sterling (£ GBP).
-- **Primary Objective:** High-converting, frictionless landing page where visitors can discover services, get an instant cost estimate, and complete a booking in under 60 seconds.
-- **Core Integration:** All completed bookings automatically post to a client Google Sheet via a webhook.
+- **Primary Objective:** High-converting, frictionless landing page where visitors can discover services, review service packages and request a free no-obligation quote. **There is no online booking** — all enquiries go through the quote form, phone or WhatsApp.
+- **Core Integration:** Quote enquiries submitted via the contact form post to the client Google Sheet via a webhook (`src/app/api/contact/route.ts`).
 
 ---
 
@@ -17,7 +17,7 @@
 - **Animations:** `framer-motion`
 - **Forms & Validation:** `react-hook-form` + `zod`
 - **UI Primitives:** Radix UI / Shadcn UI patterns
-- **Backend Route:** Next.js Route Handler (`src/app/api/book/route.ts`)
+- **Backend Route:** Next.js Route Handler (`src/app/api/contact/route.ts`)
 
 ---
 
@@ -38,7 +38,7 @@
   - Smooth anchor link scrolling (`scroll-smooth`).
   - Tactile button clicks (`active:scale-[0.98]`).
   - Real-time input validation with green tick icons for valid UK postcodes and phone numbers.
-  - Optimistic UI updates with a celebratory confirmation drawer upon booking.
+  - Clicking a service card opens a package-details dialog (what is included, ideal for, how pricing works) with a quote CTA.
 
 ---
 
@@ -47,14 +47,15 @@
 ### 4.1 Header & Navigation (Sticky)
 - **Left:** Clean Swap Logo (clean wordmark with a subtle sparkle/leaf icon).
 - **Center:** Desktop Navigation links (`Home`, `About`, `Clients`, `Services`, `Contact`).
-- **Right:** Call to Action button `[Book a Clean]` that opens the booking modal directly.
+- **Right:** Call to Action button `[Get a Free Quote]` that scrolls to the quote form (plus a click-to-call button).
 - **Mobile:** Animated hamburger drawer menu.
 
 ### 4.2 Section 1: Home (Hero)
 - **Headline:** *"Spotless Spaces, Zero Hassle. Book Professional Cleaners Across the UK in 60 Seconds."*
 - **Subheadline:** *"Fully vetted, DBS-checked professionals using eco-friendly products. Transparent pricing from £17/hr with guaranteed deposit return standards."*
 - **Trust Elements:** Trustpilot 4.9/5 stars badge, DBS-Checked badge, 100% Money-Back Guarantee icon.
-- **Quick Estimator Widget (Interactive Highlight):**
+- **Quick Estimator Widget:** *Removed.* The hero now has `[Get a Free Quote]`, `[View Services & Pricing]` and a phone link.
+- ~~Quick Estimator details (legacy):~~
   - Select service: *Regular Residential*, *Deep Clean*, or *End of Tenancy*.
   - Stepper controls for Bedrooms (`1`, `2`, `3+`) and Bathrooms (`1`, `2+`).
   - Dynamic live price readout (e.g., `Estimated: £115.00`).
@@ -72,24 +73,25 @@
   - `100%` Carbon Neutral Operations
 
 ### 4.4 Section 3: Our Clients & Social Proof
-- **Commercial Clients Marquee:** Grayscale logos of Airbnb hosts, property managers, and London office spaces.
+- **Commercial Clients Marquee:** Grayscale logos of Airbnb hosts, property managers, and regional office spaces.
 - **Customer Reviews Carousel:**
   - Star ratings, customer name, location (e.g., *Sarah M., Richmond*), and service type (*End of Tenancy Clean*).
 - **Before / After Visual Showcase:**
   - Interactive comparison cards showcasing deep oven and carpet cleaning transformations.
 
 ### 4.5 Section 4: Our Services
-- **Pricing Switcher:** `[One-Off Clean]` vs `[Subscribe & Save 15%]`.
-- **4 Service Cards:**
-  1. **Regular Residential Clean:** Dusting, vacuuming, mopping, bathroom sanitation (From £18/hr).
-  2. **Deep Clean:** Comprehensive top-to-bottom scrub, appliances, baseboards, grout refresh (From £120).
-  3. **End of Tenancy Clean:** Designed to guarantee tenant deposit return according to agency checklists (From £165).
-  4. **Office & Commercial:** Flexible after-hours or scheduled workspace sanitization (Custom quote).
-- Each card includes bullet points of what's included and a `[Select Service]` button.
+- **Package details:** Each card opens a details dialog. The one-off / subscription pricing switcher has been removed.
+- **5 Service Cards:**
+  1. **Office & Commercial:** Flexible after-hours or scheduled workspace sanitization (Custom quote).
+  2. **Certified Confined Space:** Accredited entry operatives, RAMS, breathing apparatus, silos, tanks & ducts (Bespoke quote).
+  3. **End of Tenancy Clean:** Designed to guarantee tenant deposit return according to agency checklists (From £150).
+  4. **Deep Cleaning:** Thorough top-to-bottom clean for homes and properties (From £25/hr).
+  5. **Gardening, Windows & Odd Jobs:** Specialist equipment cleans and property maintenance (Custom quote).
+- Each card includes bullet points of what's included and a `[View package details]` link opening the details dialog.
 
-### 4.6 Section 5: Contact Us & Frictionless Booking
+### 4.6 Section 5: Contact Us & Free Quotes
 
-#### Component A: 3-Step Micro-Booking Modal/Drawer
+#### Component A: 3-Step Micro-Booking Modal/Drawer (REMOVED — no online booking)
 - **Step 1 — Scope:** Service type selection, property size, and optional add-ons (Oven Clean +£35, Inside Windows +£25, Carpet Steam +£45).
 - **Step 2 — Schedule & Postcode:** UK Postcode input (regex validated), date picker (next 30 days), time slot (Morning 08:00–12:00, Afternoon 12:00–16:00).
 - **Step 3 — Customer Info:** Full Name, UK Phone Number (+44), Email Address, Special Access Notes (e.g., key safe instructions).
@@ -97,7 +99,7 @@
 
 #### Component B: General Contact Form
 - Fields: Name, Email, Subject, Message.
-- Contact Details: London UK Headquarters, WhatsApp Direct Chat link, Telephone support, Opening Hours (Mon–Sat: 08:00–19:00).
+- Contact Details: Suffolk, Cambridgeshire & Cambridge Service Hub, WhatsApp Direct Chat link, Telephone support, Opening Hours (Mon–Sat: 08:00–19:00).
 
 ---
 

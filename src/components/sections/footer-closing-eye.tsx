@@ -1,30 +1,52 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Sparkles, ArrowUp, Calendar, Phone, ShieldCheck } from "lucide-react";
-import { useBooking } from "@/components/booking/booking-provider";
+import { Sparkles, ArrowUp, ClipboardList, Phone, ShieldCheck } from "lucide-react";
+import { useQuote } from "@/components/quote/quote-provider";
 import { SITE } from "@/lib/site";
 
-const CLOSING_FRAMES = [
-  "/eye-sequence/frame-3.jpg", // 0% scroll: Fully wide open & awakened
-  "/eye-sequence/frame-2.jpg", // 50% scroll: Halfway closing
-  "/eye-sequence/frame-1.jpg", // 100% scroll: Fully closed & sealed
+const CLOSING_FRAME_PATHS = [
+  "/eye-sequence/logo-frame-3.png", // 0% scroll: Fully open (original brand logo)
+  "/eye-sequence/logo-frame-2.png", // 50% scroll: Halfway closing
+  "/eye-sequence/logo-frame-1.png", // 100% scroll: Fully closed & sealed
 ];
 
 export function FooterClosingEye() {
-  const { openBooking } = useBooking();
+  const { requestQuote } = useQuote();
   const sectionRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const [imagesReady, setImagesReady] = useState(false);
+  const [inView, setInView] = useState(false);
   const [closeProgress, setCloseProgress] = useState(0);
 
-  // Preload closing frames
+  // Only preload footer frames when user scrolls near the footer
   useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setInView(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "500px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Preload closing frames once near viewport
+  useEffect(() => {
+    if (!inView) return;
     let loadedCount = 0;
     const loadedImages: HTMLImageElement[] = [];
 
-    CLOSING_FRAMES.forEach((src, idx) => {
+    CLOSING_FRAME_PATHS.forEach((src, idx) => {
       const img = new Image();
       img.src = src;
       const onDone = () => {
@@ -39,10 +61,10 @@ export function FooterClosingEye() {
         onDone();
       } else {
         img.onload = onDone;
-        img.onerror = () => console.error("Failed to load closing frame:", src);
+        img.onerror = () => console.error("Failed to load closing logo frame:", src);
       }
     });
-  }, []);
+  }, [inView]);
 
   // Canvas render & scroll loop
   useEffect(() => {
@@ -56,6 +78,7 @@ export function FooterClosingEye() {
     let animId: number;
     let targetP = 0;
     let smoothP = 0;
+    let clock = 0;
 
     const handleScroll = () => {
       const section = sectionRef.current;
@@ -64,8 +87,6 @@ export function FooterClosingEye() {
       const rect = section.getBoundingClientRect();
       const windowH = window.innerHeight;
 
-      // Start closing as the section enters the bottom half of the screen
-      // Fully closed when near the bottom
       const startTrigger = windowH * 0.85;
       const endTrigger = windowH * 0.15;
 
@@ -90,6 +111,7 @@ export function FooterClosingEye() {
     handleScroll();
 
     const render = () => {
+      clock += 0.02;
       smoothP += (targetP - smoothP) * 0.12;
       setCloseProgress(smoothP);
 
@@ -100,69 +122,59 @@ export function FooterClosingEye() {
       ctx.save();
       ctx.scale(dpr, dpr);
 
-      // Dark Egyptian slate background matching footer
-      ctx.fillStyle = "#020617"; // slate-950
+      // Deep Dark Slate Background
+      ctx.fillStyle = "#020617";
       ctx.fillRect(0, 0, width, height);
 
-      // Determine blend between closing frames
-      // 0 -> 1 maps across 3 frames: frame 0 (open), frame 1 (halfway), frame 2 (closed)
-      const mapped = smoothP * 2; // 0 to 2
+      // Ambient sapphire glow behind seal
+      const auraGrad = ctx.createRadialGradient(
+        width / 2,
+        height / 2,
+        10,
+        width / 2,
+        height / 2,
+        Math.min(width, height) * 0.45
+      );
+      auraGrad.addColorStop(0, "rgba(56, 182, 255, 0.28)");
+      auraGrad.addColorStop(0.5, "rgba(10, 52, 99, 0.18)");
+      auraGrad.addColorStop(1, "rgba(2, 6, 23, 0)");
+      ctx.fillStyle = auraGrad;
+      ctx.fillRect(0, 0, width, height);
+
+      // 3 frames: 0 (Open) -> 1 (Halfway) -> 2 (Closed)
+      const mapped = smoothP * 2;
       const fIdx = Math.min(1, Math.floor(mapped));
       const blend = mapped - fIdx;
 
       const imgA = imagesRef.current[fIdx] || imagesRef.current[0];
       const imgB = imagesRef.current[Math.min(2, fIdx + 1)] || imgA;
 
-      const drawFrame = (img: HTMLImageElement, alpha: number) => {
-        if (!img || !img.width) return;
-        ctx.save();
-        ctx.globalAlpha = Math.max(0, Math.min(1, alpha));
-
-        const imgAspect = img.width / img.height;
-        const canvasAspect = width / height;
-
-        let renderW = width;
-        let renderH = height;
-        const scale = 1.05 - smoothP * 0.08; // slightly scales down into resting seal
-
-        if (canvasAspect > imgAspect) {
-          renderW = width * scale;
-          renderH = (width / imgAspect) * scale;
-        } else {
-          renderH = height * scale;
-          renderW = (height * imgAspect) * scale;
-        }
-
-        const offsetX = (width - renderW) / 2;
-        const offsetY = (height - renderH) / 2;
-
-        ctx.drawImage(img, offsetX, offsetY, renderW, renderH);
-        ctx.restore();
-      };
-
       if (imgA && imgA.complete) {
-        drawFrame(imgA, 1.0);
+        ctx.save();
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const levitation = Math.sin(clock * 1.5) * 6;
+
+        ctx.translate(centerX, centerY + levitation);
+
+        // Calculate size
+        const baseW = Math.min(width * 0.65, 340);
+        const baseH = baseW * (imgA.height / imgA.width);
+
+        // Draw Frame A directly with zero outer box/frame
+        ctx.drawImage(imgA, -baseW / 2, -baseH / 2, baseW, baseH);
+
+        // Cross-dissolve into Frame B as eyelids close
         if (imgB && imgB.complete && imgB !== imgA && blend > 0) {
-          drawFrame(imgB, blend);
+          ctx.globalAlpha = Math.max(0, Math.min(1, blend));
+          ctx.drawImage(imgB, -baseW / 2, -baseH / 2, baseW, baseH);
+          ctx.globalAlpha = 1.0;
         }
+
+        ctx.restore();
       }
 
-      // Vignette border fade
-      const grad = ctx.createRadialGradient(
-        width / 2,
-        height / 2,
-        Math.min(width, height) * 0.35,
-        width / 2,
-        height / 2,
-        Math.max(width, height) * 0.65
-      );
-      grad.addColorStop(0, "rgba(2, 6, 23, 0)");
-      grad.addColorStop(1, "rgba(2, 6, 23, 0.95)");
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, width, height);
-
       ctx.restore();
-
       animId = requestAnimationFrame(render);
     };
 
@@ -182,89 +194,85 @@ export function FooterClosingEye() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-slate-950 text-white pt-20 pb-16 px-5 border-t border-slate-800/80 overflow-hidden select-none"
+      className="relative w-full bg-slate-950 py-24 sm:py-32 overflow-hidden border-t border-slate-800"
     >
-      {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-teal-500/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="mx-auto max-w-7xl px-5 sm:px-7 relative z-10">
+        <div className="grid gap-12 lg:grid-cols-2 items-center">
+          {/* Left Column: Interactive 3D Sealing Canvas */}
+          <div className="relative flex flex-col items-center">
+            <div className="relative w-full max-w-md aspect-4/3 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-950">
+              <canvas ref={canvasRef} className="absolute inset-0 w-full h-full object-cover" />
 
-      <div className="relative mx-auto max-w-4xl flex flex-col items-center text-center">
-        {/* Status Pill */}
-        <div className="inline-flex items-center gap-2 rounded-full bg-slate-900/90 border border-amber-500/40 px-4 py-1.5 text-xs font-semibold text-amber-200 shadow-xl backdrop-blur-md mb-6">
-          <span className={`size-2 rounded-full ${closeProgress > 0.8 ? "bg-amber-400" : "bg-teal-400"} animate-pulse`} />
-          <span>
-            {closeProgress < 0.3
-              ? "The Eye of Oasis • Watching Over"
-              : closeProgress < 0.8
-              ? "Sealing Sanctuary • Eyelids Closing"
-              : "Sanctuary Sealed • Resting in Peace"}
-          </span>
-        </div>
+              <div className="absolute top-4 left-4 right-4 flex justify-between items-center pointer-events-none">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-900/80 border border-teal-500/40 px-3 py-1 text-[11px] font-semibold text-teal-300 backdrop-blur-md">
+                  <Sparkles className="size-3 text-amber-400" />
+                  {closeProgress < 0.35
+                    ? "Clean Sweep Oasis • Active"
+                    : closeProgress < 0.75
+                    ? "Sanctuary Preserved • Sealing"
+                    : "Clean Sweep Oasis • Sealed"}
+                </span>
+                <span className="text-[11px] font-mono text-slate-400 bg-slate-900/80 px-2 py-0.5 rounded-md border border-slate-800">
+                  {Math.round(closeProgress * 100)}%
+                </span>
+              </div>
+            </div>
 
-        {/* The Interactive Closing Eye Canvas Port */}
-        <div className="relative size-64 sm:size-80 rounded-full p-1.5 bg-linear-to-tr from-amber-600 via-amber-400 to-teal-400 shadow-[0_15px_50px_-10px_rgba(245,158,11,0.35)] overflow-hidden my-4 group">
-          {/* Rotating dashed glyph border */}
-          <div className="absolute inset-0 rounded-full border-2 border-dashed border-amber-200/50 animate-[spin_40s_linear_infinite] pointer-events-none" />
-
-          {/* Inner canvas */}
-          <div className="relative size-full rounded-full overflow-hidden bg-slate-950 border border-amber-300/40 shadow-inner">
-            <canvas
-              ref={canvasRef}
-              className="size-full object-cover"
-            />
+            <p className="mt-4 text-xs text-slate-400 text-center max-w-sm">
+              Our sacred standard of cleanliness protects your home, office, and commercial space across Suffolk, Cambridgeshire & Cambridge.
+            </p>
           </div>
-        </div>
 
-        {/* Closing Narrative & Heading */}
-        <h2 className="font-display text-2xl sm:text-4xl font-bold tracking-tight text-white mt-6">
-          {closeProgress > 0.75 ? "Your Sanctuary is Sealed" : "The Journey Concludes"}
-        </h2>
-        <p className="mt-3 text-sm sm:text-base text-slate-300 max-w-xl leading-relaxed">
-          Clean Sweep Oasis LTD provides dependable, fully-insured property support with high standards and genuine care. From single visits to multi-year commercial partnerships.
-        </p>
+          {/* Right Column: High Conversion Sanctuary CTA */}
+          <div className="flex flex-col items-start lg:pl-8">
+            <span className="inline-flex items-center gap-2 rounded-full bg-slate-900 border border-teal-500/30 px-3.5 py-1 text-xs font-semibold text-teal-300 mb-4">
+              <ShieldCheck className="size-3.5 text-teal-400" />
+              Trusted Family-Run Partner
+            </span>
 
-        {/* Trust verification pills */}
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5 text-xs text-slate-300">
-          <span className="flex items-center gap-1.5 rounded-full bg-slate-900/80 border border-slate-700/80 px-3.5 py-1.5">
-            <ShieldCheck className="size-4 text-teal-400" />
-            Public Liability Insured (£5M)
-          </span>
-          <span className="rounded-full bg-slate-900/80 border border-slate-700/80 px-3.5 py-1.5">
-            Certified COSHH & Health-and-Safety
-          </span>
-          <span className="rounded-full bg-slate-900/80 border border-slate-700/80 px-3.5 py-1.5 text-amber-300 font-semibold">
-            5.0 ★ Client Feedback
-          </span>
-        </div>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white">
+              Ready to experience spotless spaces with zero hassle?
+            </h2>
 
-        {/* Action Buttons: Awaken Again or Instant Booking */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <button
-            type="button"
-            onClick={scrollToTop}
-            className="inline-flex items-center gap-2 rounded-2xl bg-linear-to-r from-amber-500 via-amber-400 to-amber-600 px-6 py-3 text-sm font-bold text-slate-950 shadow-xl hover:brightness-110 transition-all cursor-pointer group"
-          >
-            <ArrowUp className="size-4 group-hover:-translate-y-0.5 transition-transform" />
-            <span>Awaken Again (Scroll to Top)</span>
-          </button>
+            <p className="mt-4 text-base text-slate-300 leading-relaxed max-w-lg">
+              Whether you need regular contract office cleaning, bespoke commercial property support, end of tenancy turnovers, or certified confined space decontamination, our family team delivers flawless standards every time.
+            </p>
 
-          <button
-            type="button"
-            onClick={() => openBooking()}
-            className="inline-flex items-center gap-2 rounded-2xl bg-teal-600/90 hover:bg-teal-500 border border-teal-400/50 px-6 py-3 text-sm font-bold text-white shadow-lg transition-all cursor-pointer"
-          >
-            <Calendar className="size-4" />
-            <span>Book a Clean</span>
-          </button>
+            <div className="mt-8 flex flex-wrap gap-4 w-full sm:w-auto">
+              <button
+                type="button"
+                onClick={() => requestQuote("General No-Obligation Quotation")}
+                className="flex items-center justify-center gap-2 rounded-2xl bg-linear-to-r from-teal-500 to-amber-500 hover:from-teal-400 hover:to-amber-400 px-7 py-3.5 text-sm font-bold text-slate-950 shadow-xl transition-all cursor-pointer hover:shadow-teal-500/25 hover:scale-[1.02] active:scale-[0.98]"
+              >
+                <ClipboardList className="size-4" />
+                <span>Get a Free Quote</span>
+              </button>
 
-          <a
-            href={SITE.whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-700 px-5 py-3 text-sm font-semibold text-slate-300 transition-all"
-          >
-            <Phone className="size-4 text-teal-400" />
-            <span>WhatsApp Us</span>
-          </a>
+              <a
+                href={SITE.phoneHref}
+                className="flex items-center justify-center gap-2 rounded-2xl border border-slate-700 bg-slate-900/80 hover:bg-slate-800 px-6 py-3.5 text-sm font-semibold text-white transition-all hover:border-teal-400"
+              >
+                <Phone className="size-4 text-teal-400" />
+                <span>Call {SITE.phoneDisplay}</span>
+              </a>
+            </div>
+
+            <div className="mt-10 pt-8 border-t border-slate-800/80 flex items-center justify-between w-full">
+              <div className="flex items-center gap-3">
+                <div className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-xs text-slate-400">Available across Suffolk, Cambridgeshire & Cambridge</span>
+              </div>
+
+              <button
+                type="button"
+                onClick={scrollToTop}
+                className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors cursor-pointer group"
+              >
+                <span>Back to top</span>
+                <ArrowUp className="size-3.5 group-hover:-translate-y-0.5 transition-transform" />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>

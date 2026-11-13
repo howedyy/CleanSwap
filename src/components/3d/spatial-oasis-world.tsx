@@ -88,44 +88,21 @@ export function SpatialOasisWorld() {
 
     // Load the photorealistic Eye of Horus texture
     const textureLoader = new THREE.TextureLoader();
-    textureLoader.load("/eye-sequence/frame-3.jpg", (tex) => {
+    textureLoader.load("/client-logo-transparent.png", (tex) => {
       tex.colorSpace = THREE.SRGBColorSpace;
-      const eyeDiscGeo = new THREE.CircleGeometry(1.4, 48);
-      const eyeDiscMat = new THREE.MeshBasicMaterial({
+      const eyeGeo = new THREE.PlaneGeometry(2.4, 2.4 * (142 / 299));
+      const eyeMat = new THREE.MeshBasicMaterial({
         map: tex,
         transparent: true,
-        opacity: 0.88,
+        opacity: 0.92,
+        side: THREE.DoubleSide,
       });
-      const eyeDiscMesh = new THREE.Mesh(eyeDiscGeo, eyeDiscMat);
-      eyeHorizonGroup.add(eyeDiscMesh);
+      const eyeMesh = new THREE.Mesh(eyeGeo, eyeMat);
+      eyeHorizonGroup.add(eyeMesh);
     });
-
-    // 24k Gold Bevel Ring framing the Horizon Eye
-    const goldRingGeo = new THREE.TorusGeometry(1.45, 0.05, 16, 64);
-    const goldRingMat = new THREE.MeshStandardMaterial({
-      color: 0xf59e0b,
-      emissive: 0x78350f,
-      emissiveIntensity: 0.3,
-      metalness: 0.95,
-      roughness: 0.15,
-    });
-    const goldRingMesh = new THREE.Mesh(goldRingGeo, goldRingMat);
-    eyeHorizonGroup.add(goldRingMesh);
-
-    // Outer Turquoise Sacred Geometry Halo
-    const haloGeo = new THREE.TorusGeometry(1.85, 0.025, 12, 64);
-    const haloMat = new THREE.MeshStandardMaterial({
-      color: 0x2dd4bf,
-      emissive: 0x0f766e,
-      emissiveIntensity: 0.6,
-      transparent: true,
-      opacity: 0.6,
-    });
-    const haloMesh = new THREE.Mesh(haloGeo, haloMat);
-    eyeHorizonGroup.add(haloMesh);
 
     // Dynamic Central Point Light
-    const eyeGlow = new THREE.PointLight(0x2dd4bf, 2.0, 8);
+    const eyeGlow = new THREE.PointLight(0x38b6ff, 1.8, 8);
     eyeGlow.position.set(0, 0, 0.5);
     eyeHorizonGroup.add(eyeGlow);
 
@@ -183,10 +160,6 @@ export function SpatialOasisWorld() {
       // 3D Camera Parallax
       camera.position.x = mouseX * 0.9;
       camera.position.y = -mouseY * 0.7;
-
-      // Rotate Outer Halos
-      goldRingMesh.rotation.z = elapsedTime * 0.12;
-      haloMesh.rotation.z = -elapsedTime * 0.18;
 
       // --- HORIZON EYE 3D TRAJECTORY AS USER SCROLLS DOWN ---
       // Top (0.0): Centered high
@@ -281,10 +254,6 @@ export function SpatialOasisWorld() {
       renderer.dispose();
       particleGeo.dispose();
       particleMat.dispose();
-      goldRingGeo.dispose();
-      goldRingMat.dispose();
-      haloGeo.dispose();
-      haloMat.dispose();
       scene.clear();
     };
   }, []);

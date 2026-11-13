@@ -82,7 +82,7 @@
 }
 
 /* -------------------------------------------------------------------------- */
-/*  Booking dialog: bottom sheet on mobile, centred dialog on desktop          */
+/*  Dialogs: centred package-details modal (.cs-modal) + legacy sheet styles   */
 /* -------------------------------------------------------------------------- */
 @keyframes overlay-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes overlay-out { from { opacity: 1; } to { opacity: 0; } }
@@ -105,6 +105,9 @@
   .cs-dialog[data-state="open"] { animation: dialog-in 260ms cubic-bezier(0.16, 1, 0.3, 1); }
   .cs-dialog[data-state="closed"] { animation: dialog-out 160ms ease-in; }
 }
+
+.cs-modal[data-state="open"] { animation: dialog-in 260ms cubic-bezier(0.16, 1, 0.3, 1); }
+.cs-modal[data-state="closed"] { animation: dialog-out 160ms ease-in; }
 
 /* Hide scrollbars on horizontal chip rails while keeping them scrollable */
 .no-scrollbar { scrollbar-width: none; }

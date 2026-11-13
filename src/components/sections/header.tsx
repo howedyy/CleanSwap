@@ -1,11 +1,11 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Sparkles, Menu, X } from "lucide-react";
+import { Menu, Phone, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useBooking } from "@/components/booking/booking-provider";
+import { useQuote } from "@/components/quote/quote-provider";
 import { BrandLogo } from "@/components/ui/brand-logo";
 import { SITE, NAV_ITEMS } from "@/lib/site";
 
@@ -16,8 +16,8 @@ export function Header() {
   const headerY = useTransform(scrollY, [200, 450], [-25, 0]);
   const bgOpacity = useTransform(scrollY, [450, 600], [0.85, 0.95]);
   const blur = useTransform(scrollY, [450, 600], [8, 16]);
-  
-  const { openBooking, requestQuote } = useBooking();
+
+  const { requestQuote } = useQuote();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -48,16 +48,14 @@ export function Header() {
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
-          <Button
-            onClick={() => requestQuote("Commercial / Free Quotation Request")}
-            variant="outline"
-            size="sm"
-            className="hidden xl:inline-flex"
-          >
-            Free Quotation
+          <Button asChild variant="outline" size="sm" className="hidden xl:inline-flex">
+            <a href={SITE.phoneHref}>
+              <Phone className="size-3.5" />
+              {SITE.phoneDisplay}
+            </a>
           </Button>
-          <Button onClick={() => openBooking()} size="sm">
-            Book a Clean
+          <Button onClick={() => requestQuote("General No-Obligation Quotation")} size="sm">
+            Get a Free Quote
           </Button>
         </div>
 
@@ -91,24 +89,20 @@ export function Header() {
               </Link>
             ))}
             <div className="flex flex-col gap-2 pt-2 border-t border-line">
-              <Button
-                variant="outline"
-                className="w-full"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  requestQuote("Commercial / Free Quotation Request");
-                }}
-              >
-                Request Free Quote
+              <Button asChild variant="outline" className="w-full">
+                <a href={SITE.phoneHref}>
+                  <Phone className="size-4" />
+                  Call {SITE.phoneDisplay}
+                </a>
               </Button>
               <Button
                 className="w-full"
                 onClick={() => {
                   setMobileMenuOpen(false);
-                  openBooking();
+                  requestQuote("General No-Obligation Quotation");
                 }}
               >
-                Book a Clean
+                Get a Free Quote
               </Button>
             </div>
           </nav>
