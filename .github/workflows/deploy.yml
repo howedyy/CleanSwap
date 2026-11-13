@@ -1,0 +1,86 @@
+name: CI & Deploy to VPS
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  test:
+    name: Typecheck, Lint & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript check
+        run: npx tsc --noEmit
+
+      - name: ESLint check
+        run: npm run lint
+
+      - name: Next.js production build
+        run: npm run build
+
+  deploy:
+    name: Deploy to VPS (vm01)
+    needs: [test]
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare runtime .env
+        env:
+          WEBHOOK_URL: ${{ secrets.GOOGLE_SCRIPT_CONTACT_WEBHOOK_URL }}
+        run: |
+          if [ -n "$WEBHOOK_URL" ]; then
+            echo "GOOGLE_SCRIPT_CONTACT_WEBHOOK_URL=$WEBHOOK_URL" > .env
+          elif [ -f "$HOME/sites/cleansweepoasis/.env" ]; then
+            cp "$HOME/sites/cleansweepoasis/.env" .env
+          else
+            touch .env
+          fi
+
+      - name: Ensure external Docker network exists
+        run: |
+          docker network ls --format '{{.Name}}' | grep -qx web || docker network create web
+
+      - name: Build and restart container
+        run: |
+          docker compose -p cleansweepoasis up -d --build --remove-orphans
+
+      - name: Verify container is running
+        run: |
+          docker compose -p cleansweepoasis ps
+          for i in 1 2 3 4 5; do
+            if docker exec cleansweepoasis wget -q --spider http://127.0.0.1:3000/; then
+              echo "App is healthy!"
+              exit 0
+            fi
+            sleep 2
+          done
+          docker compose -p cleansweepoasis logs --tail=50
+          exit 1
+
+      - name: Clean up dangling Docker images
+        run: |
+          docker image prune -f
