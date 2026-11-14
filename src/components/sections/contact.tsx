@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Field, TextInput, TextArea } from "@/components/ui/field";
-import { Reveal, SectionHeading } from "@/components/ui/section";
+import { Reveal } from "@/components/ui/section";
 import { useQuote } from "@/components/quote/quote-provider";
 import { contactSchema, type ContactFormValues } from "@/lib/validation";
 import { SITE } from "@/lib/site";
@@ -15,17 +15,22 @@ export function Contact() {
   const { quoteRequest } = useQuote();
   const [status, setStatus] = useState<"idle" | "pending" | "success" | "error">("idle");
   const [serverError, setServerError] = useState<string | null>(null);
+  const [seenNonce, setSeenNonce] = useState<number | null>(null);
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
     defaultValues: { name: "", email: "", subject: "", message: "", company: "" },
   });
 
+  if (quoteRequest && quoteRequest.nonce !== seenNonce) {
+    setSeenNonce(quoteRequest.nonce);
+    if (status !== "idle") setStatus("idle");
+  }
+
   // Prefill subject if requested via QuoteProvider (e.g. from a service package)
   useEffect(() => {
     if (quoteRequest) {
       form.setValue("subject", quoteRequest.subject);
-      setStatus("idle");
     }
   }, [quoteRequest, form]);
 

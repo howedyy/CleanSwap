@@ -88,7 +88,7 @@ export function ScrollTour3D() {
 
   useEffect(() => {
     if (!isWebGLAvailable()) {
-      setHasWebGL(false);
+      queueMicrotask(() => setHasWebGL(false));
       return;
     }
 
@@ -315,7 +315,7 @@ export function ScrollTour3D() {
 
     // --- Render Loop ---
     let animationFrameId: number;
-    let clock = new THREE.Clock();
+    const clock = new THREE.Clock();
 
     const currentLookAt = new THREE.Vector3(0, 0, 0);
     const targetLookAt = new THREE.Vector3(0, 0, 0);

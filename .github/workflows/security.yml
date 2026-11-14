@@ -87,7 +87,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Trivy vulnerability & misconfig scan
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           scan-type: fs
           scanners: vuln,secret,misconfig
@@ -111,7 +111,7 @@ jobs:
       - name: Build production Docker image for scanning
         run: docker build -t cleansweepoasis:scan .
       - name: Scan Docker image for CRITICAL/HIGH CVEs
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: cleansweepoasis:scan
           severity: CRITICAL,HIGH

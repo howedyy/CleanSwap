@@ -22,7 +22,7 @@ export function Logo3D({ className = "", size = 150, interactive = true }: Logo3
 
   useEffect(() => {
     if (!isWebGLAvailable()) {
-      setHasWebGL(false);
+      queueMicrotask(() => setHasWebGL(false));
       return;
     }
 
@@ -288,7 +288,7 @@ export function Logo3D({ className = "", size = 150, interactive = true }: Logo3
 
     // --- Animation Loop ---
     let animationFrameId: number;
-    let clock = new THREE.Clock();
+    const clock = new THREE.Clock();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
