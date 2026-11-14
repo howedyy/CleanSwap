@@ -1,9 +1,12 @@
 "use client";
 
-import { ShieldCheck, HeartHandshake, CalendarClock, Sparkles, ReceiptText, ThumbsUp } from "lucide-react";
+import { ShieldCheck, HeartHandshake, CalendarClock, Sparkles, ReceiptText, ThumbsUp, Building2, BadgeCheck, Phone } from "lucide-react";
+import Image from "next/image";
 import { Reveal, SectionHeading } from "@/components/ui/section";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { Card3D, Pop3D } from "@/components/ui/card-3d";
+import { Button } from "@/components/ui/button";
+import { SITE } from "@/lib/site";
 
 const WHY_CHOOSE_US = [
   {
@@ -24,7 +27,7 @@ const WHY_CHOOSE_US = [
   {
     icon: ShieldCheck,
     title: "Commercial & Specialist Credentials",
-    description: "Certified confined space entry, full Public Liability insurance coverage (£5M), strict COSHH compliance, and rigorous health-and-safety practices.",
+    description: "Certified confined space entry, full Public Liability insurance coverage (£10M), strict COSHH compliance, and rigorous health-and-safety practices.",
   },
   {
     icon: ReceiptText,
@@ -51,7 +54,7 @@ export function About() {
         <SectionHeading
           eyebrow="About Clean Sweep Oasis"
           title="A trusted family-run business delivering exceptional property support."
-          description="We provide comprehensive cleaning and property support services to residential and commercial clients across Suffolk, Cambridgeshire, and Cambridge, with high standards, friendly service, and total reliability."
+          description="We provide comprehensive cleaning and property support services to residential and commercial clients across Norfolk, Suffolk, Cambridgeshire, and Cambridge, with high standards, friendly service, and total reliability."
         />
 
         {/* 6 Core Pillars with 3D Depth */}
@@ -74,18 +77,68 @@ export function About() {
           ))}
         </div>
 
-        {/* Slide 8: Our Commitment Callout */}
-        <Reveal delay={0.2} y={20} className="mt-12">
-          <div className="rounded-3xl bg-linear-to-br from-teal-900/5 via-teal-50/50 to-amber-50/40 p-8 sm:p-10 border border-teal-200/60 shadow-xs relative overflow-hidden">
-            <div className="max-w-3xl">
-              <span className="text-xs font-bold uppercase tracking-widest text-teal-700">Our Sanctuary Commitment</span>
-              <blockquote className="mt-3 font-display text-xl sm:text-2xl font-bold text-slate-900 leading-snug">
-                “We are committed to delivering dependable cleaning services with attention to detail, professionalism and customer satisfaction in every job we undertake.”
-              </blockquote>
-              <p className="mt-4 text-sm font-semibold text-amber-700 flex items-center gap-1.5">
-                <span className="size-1.5 rounded-full bg-amber-500" />
-                Clean Sweep Oasis LTD Team
-              </p>
+        {/* Commercial Solutions Showcase & Commitment */}
+        <Reveal delay={0.2} y={20} className="mt-14">
+          <div className="rounded-3xl bg-linear-to-br from-teal-900/5 via-teal-50/50 to-amber-50/40 p-6 sm:p-10 border border-teal-200/60 shadow-xs relative overflow-hidden">
+            <div className="grid gap-8 lg:grid-cols-12 items-center">
+              <div className="lg:col-span-7">
+                <span className="text-xs font-bold uppercase tracking-widest text-teal-700">Commercial Solutions &amp; Commitment</span>
+                <h3 className="mt-2 font-display text-2xl sm:text-3xl font-bold text-slate-900 leading-tight">
+                  Professional Commercial Cleaning Solutions
+                </h3>
+                <blockquote className="mt-4 font-display text-lg sm:text-xl font-medium text-slate-800 leading-relaxed italic border-l-4 border-amber-500 pl-4">
+                  “We are committed to delivering dependable cleaning services with attention to detail, professionalism and customer satisfaction in every job we undertake.”
+                </blockquote>
+                <p className="mt-3 text-sm font-semibold text-amber-700 flex items-center gap-1.5">
+                  <span className="size-1.5 rounded-full bg-amber-500" />
+                  Clean Sweep Oasis LTD Team
+                </p>
+
+                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs font-medium text-slate-700">
+                  <div className="flex items-center gap-2 rounded-xl bg-white/80 p-2.5 ring-1 ring-slate-200/60">
+                    <Building2 className="size-4 text-teal-600 shrink-0" />
+                    <span>Office &amp; Commercial</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-xl bg-white/80 p-2.5 ring-1 ring-slate-200/60">
+                    <Sparkles className="size-4 text-teal-600 shrink-0" />
+                    <span>Deep Office Cleaning</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-xl bg-white/80 p-2.5 ring-1 ring-slate-200/60">
+                    <ShieldCheck className="size-4 text-teal-600 shrink-0" />
+                    <span>Window Cleaning</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-xl bg-white/80 p-2.5 ring-1 ring-slate-200/60">
+                    <BadgeCheck className="size-4 text-teal-600 shrink-0" />
+                    <span>Post-Construction Cleanup</span>
+                  </div>
+                </div>
+
+                <div className="mt-7 flex flex-wrap items-center gap-4">
+                  <Button asChild size="md">
+                    <a href="#contact">Book Free Commercial Estimate</a>
+                  </Button>
+                  <a
+                    href={SITE.phoneHref}
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 hover:text-teal-700 transition-colors"
+                  >
+                    <Phone className="size-3.5 text-teal-600" />
+                    {SITE.phoneDisplay}
+                  </a>
+                </div>
+              </div>
+
+              <div className="lg:col-span-5 flex justify-center">
+                <div className="relative group max-w-xs sm:max-w-sm rounded-2xl overflow-hidden shadow-xl ring-1 ring-slate-900/10 transition-transform duration-300 hover:scale-[1.02]">
+                  <Image
+                    src="/commercial-cleaning-solutions.jpg"
+                    alt="Clean Sweep Oasis LTD — Professional Commercial Cleaning Solutions"
+                    width={571}
+                    height={1024}
+                    className="w-full h-auto object-cover rounded-2xl"
+                    priority
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </Reveal>

@@ -29,7 +29,7 @@ export const TOUR_STAGES: TourStage[] = [
   {
     id: "about",
     name: "Foundation of Trust",
-    subtitle: "Full Public Liability (£5M) & Certified COSHH Protocols",
+    subtitle: "Full Public Liability (£10M) & Certified COSHH Protocols",
     progress: [0.16, 0.35],
     cameraPos: [-3.8, 1.8, 6.2],
     cameraLookAt: [-1.2, 0.5, 0],
@@ -65,7 +65,7 @@ export const TOUR_STAGES: TourStage[] = [
   {
     id: "contact",
     name: "5-Star Sanctuary & Quotes",
-    subtitle: "Suffolk, Cambridgeshire & Cambridge Coverage • 100% Satisfaction Guarantee",
+    subtitle: "Norfolk, Suffolk, Cambridgeshire & Cambridge Coverage • 100% Satisfaction Guarantee",
     progress: [0.86, 1.0],
     cameraPos: [0, 0.5, 7.0],
     cameraLookAt: [0, 0, 0],

@@ -76,7 +76,7 @@ export function Contact() {
                 Request Your Free Quotation.
               </h2>
               <p className="mt-4 text-lg text-muted max-w-md">
-                Start with a free, no-obligation quotation. We provide dependable property care and cleaning across Suffolk, Cambridgeshire, and Cambridge.
+                Start with a free, no-obligation quotation. We provide dependable property care and cleaning across Norfolk, Suffolk, Cambridgeshire, and Cambridge.
               </p>
 
               {/* Slide 9 Checklist: For an accurate quote */}
@@ -164,10 +164,10 @@ export function Contact() {
                   <div>
                     <h3 className="font-semibold text-ink">Service Areas</h3>
                     <p className="mt-0.5 text-sm font-medium text-slate-800">
-                      Suffolk, Cambridgeshire & Cambridge
+                      Norfolk, Suffolk, Cambridgeshire & Cambridge
                     </p>
                     <p className="mt-0.5 text-xs text-muted">
-                      Cambridge, Newmarket, Bury St Edmunds, Ely, Ipswich & surrounding regional areas
+                      Norwich, Cambridge, Newmarket, Bury St Edmunds, Ely, Ipswich & surrounding regional areas
                     </p>
                   </div>
                 </div>

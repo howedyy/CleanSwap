@@ -53,7 +53,7 @@ export function BrandLogo({
               isDark ? "text-teal-400" : "text-teal-700"
             }`}
           >
-            Suffolk, Cambridgeshire & Cambridge
+            Norfolk, Suffolk, Cambridgeshire & Cambridge
           </span>
         )}
       </div>
