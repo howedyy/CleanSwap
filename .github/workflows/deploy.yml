@@ -53,14 +53,21 @@ jobs:
 
       - name: Prepare runtime .env
         env:
+          GOOGLE_SCRIPT_CONTACT_WEBHOOK_URL: ${{ secrets.GOOGLE_SCRIPT_CONTACT_WEBHOOK_URL }}
           WEB3FORMS_ACCESS_KEY: ${{ secrets.WEB3FORMS_ACCESS_KEY }}
         run: |
-          if [ -n "$WEB3FORMS_ACCESS_KEY" ]; then
-            echo "WEB3FORMS_ACCESS_KEY=$WEB3FORMS_ACCESS_KEY" > .env
-          elif [ -f "$HOME/sites/cleansweepoasis/.env" ]; then
+          if [ -f "$HOME/sites/cleansweepoasis/.env" ]; then
             cp "$HOME/sites/cleansweepoasis/.env" .env
           else
             touch .env
+          fi
+          if [ -n "$GOOGLE_SCRIPT_CONTACT_WEBHOOK_URL" ]; then
+            sed -i '/^GOOGLE_SCRIPT_CONTACT_WEBHOOK_URL=/d' .env 2>/dev/null || true
+            echo "GOOGLE_SCRIPT_CONTACT_WEBHOOK_URL=$GOOGLE_SCRIPT_CONTACT_WEBHOOK_URL" >> .env
+          fi
+          if [ -n "$WEB3FORMS_ACCESS_KEY" ]; then
+            sed -i '/^WEB3FORMS_ACCESS_KEY=/d' .env 2>/dev/null || true
+            echo "WEB3FORMS_ACCESS_KEY=$WEB3FORMS_ACCESS_KEY" >> .env
           fi
 
       - name: Ensure external Docker network exists

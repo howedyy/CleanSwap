@@ -6,7 +6,10 @@ services:
     image: cleansweepoasis:latest
     container_name: cleansweepoasis
     restart: unless-stopped
-    # Runtime secrets (e.g. GOOGLE_SCRIPT_CONTACT_WEBHOOK_URL) live in a .env file on the server.
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    # Runtime secrets (e.g. WEB3FORMS_ACCESS_KEY) live in a .env file on the server.
     env_file:
       - .env
     environment:
@@ -17,6 +20,7 @@ services:
       - "3000"
     networks:
       - web
+      - default
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:3000/ || exit 1"]
       interval: 30s
@@ -37,3 +41,4 @@ services:
 networks:
   web:
     external: true
+  default:
