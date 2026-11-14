@@ -1,7 +1,7 @@
 "use client";
 
 import { Star, Quote } from "lucide-react";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { Reveal, SectionHeading } from "@/components/ui/section";
 
@@ -45,7 +45,7 @@ const REVIEWS = [
   },
 ];
 
-function BeforeAfterSlider({ beforeSrc, afterSrc, label }: { beforeSrc: any; afterSrc: any; label: string }) {
+function BeforeAfterSlider({ beforeSrc, afterSrc, label }: { beforeSrc: StaticImageData; afterSrc: StaticImageData; label: string }) {
   const [sliderPosition, setSliderPosition] = useState(50);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);

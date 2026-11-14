@@ -28,12 +28,7 @@ export function AnimatedNumber({
   const current = useRef(display);
 
   useEffect(() => {
-    if (startOnView && !inView) return;
-    if (reduce) {
-      current.current = value;
-      setDisplay(value);
-      return;
-    }
+    if (reduce || (startOnView && !inView)) return;
     const controls = animate(current.current, value, {
       duration,
       ease: [0.16, 1, 0.3, 1],
@@ -45,5 +40,5 @@ export function AnimatedNumber({
     return () => controls.stop();
   }, [value, inView, startOnView, duration, reduce]);
 
-  return <span ref={ref}>{format(display)}</span>;
+  return <span ref={ref}>{format(reduce ? value : display)}</span>;
 }
