@@ -13,7 +13,7 @@ interface SectionStage {
 
 const SECTIONS: SectionStage[] = [
   { id: "home", name: "Oasis Sanctuary", tag: "Hero & Free Quotes" },
-  { id: "about", name: "Trust & Standards", tag: "£5M Insured & COSHH" },
+  { id: "about", name: "Trust & Standards", tag: "£10M Insured & COSHH" },
   { id: "services", name: "Tailored Services", tag: "Commercial & Specialist" },
   { id: "process", name: "4-Step Pathway", tag: "Site Visit → Handover" },
   { id: "clients", name: "Client Sanctuary", tag: "5.0 ★ Client Feedback" },

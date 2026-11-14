@@ -25,7 +25,7 @@ const STAGES = [
   {
     threshold: 0.55,
     title: "The Awakened Vision",
-    subtitle: "Serving Suffolk, Cambridgeshire & Cambridge with pride",
+    subtitle: "Serving Norfolk, Suffolk, Cambridgeshire & Cambridge with pride",
   },
   {
     threshold: 0.85,

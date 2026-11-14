@@ -95,7 +95,6 @@ const SERVICES: ServicePackage[] = [
       "Multi-gas detectors & escape breathing apparatus",
       "Full RAMS, risk assessments & permits to work",
       "Silos, tanks, interceptors & ductwork",
-      "Comprehensive post-clean certification",
     ],
     idealFor: ["Tanks, vessels & silos", "Grease interceptors & drains", "Ductwork & shafts", "Industrial & agricultural sites"],
     howPricingWorks:
@@ -343,7 +342,7 @@ export function Services() {
                       <h4 className="text-sm font-bold text-slate-900">How pricing works</h4>
                       <p className="mt-1.5 text-sm leading-relaxed text-slate-600">{active.howPricingWorks}</p>
                       <p className="mt-3 flex items-center gap-1.5 text-xs text-slate-500">
-                        <MapPin className="size-3.5" /> Serving Suffolk, Cambridgeshire &amp; Cambridge
+                        <MapPin className="size-3.5" /> Serving Norfolk, Suffolk, Cambridgeshire &amp; Cambridge
                       </p>
                     </div>
                   </div>

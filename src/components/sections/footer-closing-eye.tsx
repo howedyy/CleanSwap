@@ -219,7 +219,7 @@ export function FooterClosingEye() {
             </div>
 
             <p className="mt-4 text-xs text-slate-400 text-center max-w-sm">
-              Our sacred standard of cleanliness protects your home, office, and commercial space across Suffolk, Cambridgeshire & Cambridge.
+              Our sacred standard of cleanliness protects your home, office, and commercial space across Norfolk, Suffolk, Cambridgeshire & Cambridge.
             </p>
           </div>
 
@@ -260,7 +260,7 @@ export function FooterClosingEye() {
             <div className="mt-10 pt-8 border-t border-slate-800/80 flex items-center justify-between w-full">
               <div className="flex items-center gap-3">
                 <div className="size-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-xs text-slate-400">Available across Suffolk, Cambridgeshire & Cambridge</span>
+                <span className="text-xs text-slate-400">Available across Norfolk, Suffolk, Cambridgeshire & Cambridge</span>
               </div>
 
               <button

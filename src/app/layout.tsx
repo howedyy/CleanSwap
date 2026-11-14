@@ -14,11 +14,12 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "Clean Sweep Oasis LTD | Professional Cleaning & Property Services",
   description:
-    "Trusted family-run cleaning & property support services across Suffolk, Cambridgeshire, and Cambridge. Commercial & deep cleaning from £25/hr, End of Tenancy from £150, gardening & specialist cleans. Fully insured with free no-obligation quotes.",
+    "Trusted family-run cleaning & property support services across Norfolk, Suffolk, Cambridgeshire, and Cambridge. Commercial & deep cleaning from £25/hr, End of Tenancy from £150, gardening & specialist cleans. Fully insured with free no-obligation quotes.",
   keywords: [
     "Clean Sweep Oasis",
     "commercial cleaning Cambridge",
     "cleaning services Suffolk",
+    "cleaners Norfolk",
     "cleaners Cambridgeshire",
     "commercial cleaning Suffolk",
     "certified confined space cleaning",
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Clean Sweep Oasis LTD — Reliable • Professional • Family Run",
-    description: "High standard commercial, certified confined space, residential, and specialist cleaning services across Suffolk, Cambridgeshire, and Cambridge.",
+    description: "High standard commercial, certified confined space, residential, and specialist cleaning services across Norfolk, Suffolk, Cambridgeshire, and Cambridge.",
     locale: "en_GB",
     type: "website",
   },

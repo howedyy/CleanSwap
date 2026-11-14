@@ -15,7 +15,7 @@ interface SectionStage {
 
 const SECTIONS: SectionStage[] = [
   { id: "home", name: "Oasis Sanctuary", subtitle: "Hero & Free Quotes", tag: "Phase 1", accent: "from-teal-500 to-amber-500" },
-  { id: "about", name: "Trust & Standards", subtitle: "£5M Public Liability & COSHH", tag: "Phase 2", accent: "from-amber-500 to-teal-400" },
+  { id: "about", name: "Trust & Standards", subtitle: "£10M Public Liability & COSHH", tag: "Phase 2", accent: "from-amber-500 to-teal-400" },
   { id: "services", name: "Tailored Services", subtitle: "Commercial, Deep Clean & Confined Space", tag: "Phase 3", accent: "from-teal-400 to-emerald-400" },
   { id: "process", name: "4-Step Pathway", subtitle: "Site Visit ➔ Certified Handover", tag: "Phase 4", accent: "from-amber-400 to-amber-600" },
   { id: "clients", name: "Client Feedback", subtitle: "5.0 ★ Multi-Year Partnerships", tag: "Phase 5", accent: "from-teal-500 to-cyan-400" },
