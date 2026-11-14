@@ -50,10 +50,10 @@ jobs:
 
       - name: Prepare runtime .env
         env:
-          WEBHOOK_URL: ${{ secrets.GOOGLE_SCRIPT_CONTACT_WEBHOOK_URL }}
+          WEB3FORMS_ACCESS_KEY: ${{ secrets.WEB3FORMS_ACCESS_KEY }}
         run: |
-          if [ -n "$WEBHOOK_URL" ]; then
-            echo "GOOGLE_SCRIPT_CONTACT_WEBHOOK_URL=$WEBHOOK_URL" > .env
+          if [ -n "$WEB3FORMS_ACCESS_KEY" ]; then
+            echo "WEB3FORMS_ACCESS_KEY=$WEB3FORMS_ACCESS_KEY" > .env
           elif [ -f "$HOME/sites/cleansweepoasis/.env" ]; then
             cp "$HOME/sites/cleansweepoasis/.env" .env
           else
