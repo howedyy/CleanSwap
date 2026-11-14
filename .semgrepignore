@@ -1,5 +1,0 @@
-# Exclude third-party skill reference templates and local asset-generation scripts
-skills/
-scripts/
-node_modules/
-.next/
